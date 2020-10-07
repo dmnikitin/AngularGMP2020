@@ -98,7 +98,10 @@ module.exports = {
         "@typescript-eslint/explicit-member-accessibility": [
             "error",
             {
-                "accessibility": "explicit"
+                "accessibility": "explicit",
+                "overrides": {
+                  "constructors": 'no-public',
+                }
             }
         ],
         "@typescript-eslint/explicit-module-boundary-types": "warn",
