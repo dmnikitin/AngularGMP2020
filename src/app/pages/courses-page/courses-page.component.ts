@@ -14,10 +14,8 @@ export class CoursesPageComponent implements OnInit {
   constructor() { }
 
   public ngOnInit(): void {
-    this.courses = mockCourses.map( course => {
-      const { id, title, createdAt, duration, description } = course;
-      return new Course( id, title, createdAt, duration, description );
-    });
+    this.courses = mockCourses.map(({ id, title, createdAt, duration, description }: Course) =>
+      new Course( id, title, createdAt, duration, description ));
   }
 
 }

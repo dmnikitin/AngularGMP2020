@@ -6,11 +6,9 @@ export interface IUser {
 
 export class User implements IUser {
 
-  public id: string;
-  public firstName: string;
-  public lastName: string;
-
-  constructor(id: string, firstName: string, lastName: string) {
-    Object.assign(this, {id, firstName, lastName});
-  }
+  constructor(
+    public id: string,
+    public firstName: string,
+    public lastName: string
+  ) {}
 }
