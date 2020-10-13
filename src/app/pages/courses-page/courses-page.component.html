@@ -1,12 +1,6 @@
 <app-breadcrumbs></app-breadcrumbs>
-<section class="control-panel">
-  <form action="">
-    <input type="text" name="search">
-    <button type="submit">Search</button>
-  </form>
-  <button type="button">Add course</button>
-</section>
-<div class="course-wrapper">
+<app-course-controls></app-course-controls>
+<div class="courses-wrapper">
   <app-course-item *ngFor="let item of courses"></app-course-item>
 </div>
 <button type="button">Load more</button>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ICourse, Course } from 'src/app/models/course';
+import { Course } from 'src/app/models/course';
 import { mockCourses } from 'src/assets/mock-data';
 
 @Component({
@@ -9,7 +9,7 @@ import { mockCourses } from 'src/assets/mock-data';
 })
 export class CoursesPageComponent implements OnInit {
 
-  public courses: Array<ICourse>;
+  public courses: Array<Course>;
 
   constructor() { }
 
