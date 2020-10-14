@@ -8,6 +8,7 @@ module.exports = {
         "jasmine": true,
         "jest": true
     },
+    "ignorePatterns": "*.js",
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -423,5 +424,14 @@ module.exports = {
         ],
         "use-isnan": "error",
         "valid-typeof": "off"
-    }
+    },
+    "overrides": [
+      {
+        "files": ["*-spec.ts","*.spec.ts"],
+        "rules": {
+          "@typescript-eslint/no-floating-promises": "off",
+          "jasmine/no-expect-in-setup-teardown": "off"
+        }
+      }
+    ]
 };

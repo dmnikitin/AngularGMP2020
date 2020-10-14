@@ -10,7 +10,7 @@ describe('BreadcrumbsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ BreadcrumbsComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
