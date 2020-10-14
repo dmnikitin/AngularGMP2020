@@ -20,6 +20,11 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting()
 );
 // Then we find all the tests.
-const context = require.context('./', true, /\.spec\.ts$/);
+const context: RequireContext = require.context('./', true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);
+
+interface RequireContext {
+  keys(): string[];
+  (id: string): Record<string, unknown>;
+}

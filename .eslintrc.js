@@ -8,6 +8,7 @@ module.exports = {
         "jasmine": true,
         "jest": true
     },
+    "ignorePatterns": "*.js",
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -98,7 +99,10 @@ module.exports = {
         "@typescript-eslint/explicit-member-accessibility": [
             "error",
             {
-                "accessibility": "explicit"
+                "accessibility": "explicit",
+                "overrides": {
+                  "constructors": 'no-public',
+                }
             }
         ],
         "@typescript-eslint/explicit-module-boundary-types": "warn",
@@ -420,5 +424,14 @@ module.exports = {
         ],
         "use-isnan": "error",
         "valid-typeof": "off"
-    }
+    },
+    "overrides": [
+      {
+        "files": ["*-spec.ts","*.spec.ts"],
+        "rules": {
+          "@typescript-eslint/no-floating-promises": "off",
+          "jasmine/no-expect-in-setup-teardown": "off"
+        }
+      }
+    ]
 };
