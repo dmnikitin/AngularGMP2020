@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseControlsComponent implements OnInit {
 
+  public searchQuery: string;
+
   constructor() { }
 
+  public showQuery(): void {
+    console.log('query is: ', this.searchQuery);
+  }
+
   public ngOnInit(): void {
+    this.searchQuery = '';
   }
 
 }

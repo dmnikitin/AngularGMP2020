@@ -1,6 +1,6 @@
 <form action="">
-  <input type="text" name="search">
-  <button type="submit">Search</button>
+  <input type="text" name="search" [(ngModel)]="searchQuery">
+  <button type="submit" (click)="showQuery()">Search</button>
 </form>
 <button type="button">Add course</button>
 
