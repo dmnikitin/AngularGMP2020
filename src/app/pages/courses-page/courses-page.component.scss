@@ -1,3 +1,5 @@
+@import "src/mixins.scss";
+
 :host {
   display: flex;
   flex-direction: column;
@@ -7,5 +9,22 @@
 .courses-wrapper {
   display: flex;
   flex-direction: column;
-  padding: 0 150px 0 85px;
+  width: 86%;
+  margin: 0 auto;
+}
+
+.button {
+  @include flex-vertical-center();
+  height: 50px;
+  justify-content: center;
+  width: 86%;
+  margin: 20px auto 50px;
+  padding: 20px;
+  font-size: 12px;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: var(--color-blue);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }
