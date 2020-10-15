@@ -2,12 +2,9 @@
 
 :host {
   @include flex-vertical-center();
+  @include header();
   justify-content: space-between;
-  height: 60px;
-  padding: 0 125px;
-  background: #303240;
-  color: #FFFFFF;
-  font-family: 'Source Sans Pro', sans-serif;
+
 }
 
 .wrapper {
@@ -34,7 +31,7 @@
 .logout {
   @include flex-vertical-center();
   height: 30px;
-	color: #FFFFFF;
+  color: var(--color-white);
   background: transparent;
   border: none;
   cursor: pointer;
