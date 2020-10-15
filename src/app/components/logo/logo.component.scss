@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  margin-right: 20px;
+}
+.logo {
+  background: linear-gradient(141deg, #0079AD 11%, #B4D084 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 30px;
+}
