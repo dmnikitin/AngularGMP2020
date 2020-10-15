@@ -1,0 +1,52 @@
+@import "src/mixins.scss";
+
+:host {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.button {
+  @include blue-button(65px, 24px);
+
+  span {
+    font-size: 11px;
+  }
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-title {
+  font-size: 24px;
+  margin: 0;
+}
+.text-meta {
+  @include flex-vertical-center();
+
+  &__el {
+    margin-right: 10px;
+  }
+
+  span {
+    color: var(--color-grey);
+    font-size: 14px;
+  }
+}
+
+.icons-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  min-width: 150px;
+}

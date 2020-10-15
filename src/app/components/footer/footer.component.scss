@@ -3,7 +3,7 @@
 :host {
   @include header();
   justify-content: flex-end;
-
+  position: sticky;
 }
 
 .footer-text {

@@ -1,10 +1,26 @@
-<div>
-  <h5>{{ item.title }}</h5>
-  <span>{{ item.duration }}</span>
-  <span>{{ item.createdAt }}</span>
-  <p> {{ item.description }} </p>
+<div class="wrapper text-wrapper">
+  <div class="wrapper ">
+    <h5 class="text-title">{{ item.title }}</h5>
+    <div class="text-meta">
+      <div class="text-meta__el">
+        <span class="material-icons">access_time</span>
+        <span>{{ item.duration }}</span>
+      </div>
+      <div class="text-meta__el">
+        <span class="material-icons">calendar_today</span>
+        <span>{{ item.createdAt }}</span>
+      </div>
+    </div>
+  </div>
+  <p class="text-description"> {{ item.description }} </p>
 </div>
-<div>
-  <button>EDIT</button>
-  <button>DELETE</button>
+<div class="wrapper icons-wrapper">
+  <button class="button">
+    <span class="material-icons">edit</span>
+    EDIT
+  </button>
+  <button class="button">
+    <span class="material-icons">delete</span>
+    DELETE
+  </button>
 </div>

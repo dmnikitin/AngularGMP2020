@@ -11,3 +11,18 @@
   color: var(--color-white);
   font-family: 'Source Sans Pro', sans-serif;
 }
+
+@mixin blue-button($width, $height) {
+  @include flex-vertical-center();
+  justify-content: center;
+  background: var(--color-blue);
+  color: var(--color-white);
+  border-color: transparent;
+  border-radius: 3px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  width: $width;
+  height: $height;
+  font-size: 12px;
+}
