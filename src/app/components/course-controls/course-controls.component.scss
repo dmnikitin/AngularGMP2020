@@ -1,0 +1,30 @@
+@import "src/mixins.scss";
+
+:host {
+  padding: 30px 85px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  height: 36px;
+  color: var(--color-white);
+  border-color: transparent;
+  border-radius: 3px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.search-button {
+  background: var(--color-green);
+  width: 73px;
+  margin-left: 10px;
+}
+
+.add-button {
+  @include flex-vertical-center();
+  margin: 75px 50px 0;
+  background: var(--color-blue);
+  width: 110px;
+}

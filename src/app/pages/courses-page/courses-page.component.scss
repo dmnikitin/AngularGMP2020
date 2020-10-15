@@ -1,4 +1,11 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-teal);
+}
+
 .courses-wrapper {
   display: flex;
   flex-direction: column;
+  padding: 0 85px;
 }

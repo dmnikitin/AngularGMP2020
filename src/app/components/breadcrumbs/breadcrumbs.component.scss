@@ -3,6 +3,7 @@
 :host {
   @include flex-vertical-center();
   height: 64px;
+  background: var(--color-white);
   padding: 0 85px;
 }
 
