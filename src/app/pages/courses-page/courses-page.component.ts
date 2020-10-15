@@ -13,6 +13,10 @@ export class CoursesPageComponent implements OnInit {
 
   constructor() { }
 
+  public onItemDelete(event: string): void {
+    console.log(event);
+  }
+
   public ngOnInit(): void {
     this.courses = mockCourses.map(({ id, title, createdAt, duration, description }: Course) =>
       new Course( id, title, createdAt, duration, description ));
