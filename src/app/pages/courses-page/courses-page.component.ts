@@ -10,11 +10,14 @@ import { mockCourses } from 'src/assets/mock-data';
 export class CoursesPageComponent implements OnInit {
 
   public courses: Array<Course>;
-
   constructor() { }
 
-  public onItemDelete(event: string): void {
-    console.log(event);
+  public onItemDelete(itemName: string): void {
+    console.log(itemName);
+  }
+
+  public onLoadMore(): void {
+    console.log('load more');
   }
 
   public ngOnInit(): void {
