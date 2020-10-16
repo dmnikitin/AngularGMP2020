@@ -12,7 +12,7 @@ export class CourseControlsComponent implements OnInit {
   constructor() { }
 
   public showQuery(): void {
-    console.log('query is: ', this.searchQuery);
+    console.log('______________________________query is: ', this.searchQuery);
   }
 
   public ngOnInit(): void {

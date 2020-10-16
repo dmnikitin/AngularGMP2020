@@ -13,11 +13,11 @@ export class CoursesPageComponent implements OnInit {
   constructor() { }
 
   public onItemDelete(itemName: string): void {
-    console.log(itemName);
+    console.log('______________________________', itemName);
   }
 
   public onLoadMore(): void {
-    console.log('load more');
+    console.log('______________________________ load more');
   }
 
   public ngOnInit(): void {
