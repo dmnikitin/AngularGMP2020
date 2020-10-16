@@ -12,8 +12,8 @@ export class CoursesPageComponent implements OnInit {
   public courses: Array<Course>;
   constructor() { }
 
-  public onItemDelete(itemName: string): void {
-    console.log('______________________________', itemName);
+  public onItemDelete(itemId: string): void {
+    console.log('______________________________', itemId);
   }
 
   public onLoadMore(): void {
