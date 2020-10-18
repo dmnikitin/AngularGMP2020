@@ -27,8 +27,8 @@ export class CourseItemComponent implements OnInit, OnChanges, DoCheck, OnDestro
   @Input() public item: ICourse;
   constructor() { }
 
-  public handleDelete(itemTitle: string): void {
-    this.deletedItem.emit(itemTitle);
+  public handleDelete(itemId: string): void {
+    this.deletedItem.emit(itemId);
   }
 
   public ngOnInit(): void {
