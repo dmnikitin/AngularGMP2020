@@ -10,8 +10,15 @@ import { mockCourses } from 'src/assets/mock-data';
 export class CoursesPageComponent implements OnInit {
 
   public courses: Array<Course>;
-
   constructor() { }
+
+  public onItemDelete(itemId: string): void {
+    console.log('______________________________', itemId);
+  }
+
+  public onLoadMore(): void {
+    console.log('______________________________ load more');
+  }
 
   public ngOnInit(): void {
     this.courses = mockCourses.map(({ id, title, createdAt, duration, description }: Course) =>

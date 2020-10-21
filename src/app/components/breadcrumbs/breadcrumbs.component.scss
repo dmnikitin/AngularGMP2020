@@ -1,0 +1,15 @@
+@import "src/mixins.scss";
+
+:host {
+  @include flex-vertical-center();
+  height: 64px;
+  background: var(--color-white);
+  padding: 0 85px;
+}
+
+.breadcrumbs-text {
+  color: var(--color-dark);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}

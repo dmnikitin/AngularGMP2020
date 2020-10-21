@@ -1,6 +1,12 @@
-<form action="">
-  <input type="text" name="search">
-  <button type="submit">Search</button>
-</form>
-<button type="button">Add course</button>
+<div class="wrapper">
+  <mat-form-field>
+    <input matInput type="text" name="search" [(ngModel)]="searchQuery" placeholder="Type to search">
+    <mat-icon matPrefix>search</mat-icon>
+  </mat-form-field>
+  <button mat-button type="submit" class="search-button" (click)="showQuery()">Search</button>
+</div>
+<button type="button" class="add-button">
+  <span class="material-icons">add</span>
+  Add course
+</button>
 

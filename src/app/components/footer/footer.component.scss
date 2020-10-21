@@ -1,0 +1,14 @@
+@import "src/mixins.scss";
+
+:host {
+  @include header();
+  justify-content: flex-end;
+  position: sticky;
+}
+
+.footer-text {
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: 0;
+  line-height: 32px;
+	font-size: 12px;
+}

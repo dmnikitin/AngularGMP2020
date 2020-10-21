@@ -1,12 +1,37 @@
+@import "src/mixins.scss";
+
 :host {
-  display: flex;
-  height: 60px;
+  @include flex-vertical-center();
+  @include header();
+  justify-content: space-between;
+}
+
+.wrapper {
+  @include flex-vertical-center();
 }
 
 .video-course {
-  margin:0;
+	font-size: 18px;
+	font-weight: 700;
+	text-transform: uppercase;
+  margin: 0;
+}
+
+.user-info {
+  @include flex-vertical-center();
+	letter-spacing: 0;
+	font-size: 14px;
+  font-weight: 400;
+	text-transform: none;
+  text-align: left;
+  margin-right: 20px;
 }
 
 .logout {
+  @include flex-vertical-center();
   height: 30px;
+  color: var(--color-white);
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }

@@ -1,6 +1,6 @@
 <app-breadcrumbs></app-breadcrumbs>
 <app-course-controls></app-course-controls>
 <div class="courses-wrapper">
-  <app-course-item *ngFor="let item of courses"></app-course-item>
+  <app-course-item *ngFor="let item of courses" [item]="item" (deletedItem)="onItemDelete($event)"></app-course-item>
 </div>
-<button type="button">Load more</button>
+<button type="button" class="button" (click)="onLoadMore()">Load more</button>
