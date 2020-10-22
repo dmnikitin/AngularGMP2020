@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+const { off } = require("process");
+
 module.exports = {
     "env": {
         "browser": true,
@@ -430,7 +432,8 @@ module.exports = {
         "files": ["*-spec.ts","*.spec.ts"],
         "rules": {
           "@typescript-eslint/no-floating-promises": "off",
-          "jasmine/no-expect-in-setup-teardown": "off"
+          "jasmine/no-expect-in-setup-teardown": "off",
+          "@typescript-eslint/unbound-method": "off"
         }
       }
     ]
