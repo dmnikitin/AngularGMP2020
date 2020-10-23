@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, ElementRef, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { CourseControlsComponent } from './course-controls.component';
 
 describe('CourseControlsComponent', () => {
@@ -26,21 +26,22 @@ describe('CourseControlsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
   it('should log to console current input query on clicking the search button', ()=>{
-    spyOn(console, 'log');
+    const buttonRef: ElementRef = debugElement.query(By.css('.search-button'));
+    const inputRef: ElementRef = debugElement.query(By.css('input'));
+    const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
+    const input: HTMLInputElement = inputRef.nativeElement as HTMLInputElement;
     mockData = 'mockInputData';
-
-    const hostElement: HTMLInputElement = fixture.nativeElement as HTMLInputElement;
-    const input: HTMLInputElement = hostElement.querySelector('input');
-    const button: ElementRef = debugElement.query(By.css('.search-button'));
     input.value = mockData;
     input.dispatchEvent(new Event('input'));
+
+    spyOn(console, 'log');
     fixture.detectChanges();
-    (button.nativeElement as HTMLButtonElement).click();
+    button.click();
 
     expect(console.log).toHaveBeenCalledTimes(1);
     expect(console.log).toHaveBeenCalledWith('query is: ', mockData);

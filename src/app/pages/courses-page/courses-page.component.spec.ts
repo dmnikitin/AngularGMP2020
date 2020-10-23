@@ -1,6 +1,6 @@
-import { FormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, ElementRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { BreadcrumbsComponent } from 'src/app/components/breadcrumbs/breadcrumbs.component';
 import { CourseControlsComponent } from 'src/app/components/course-controls/course-controls.component';
@@ -36,39 +36,44 @@ describe('CoursesPageComponent', () => {
     spyOn(console, 'log');
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('onItemDelete method which was emitted by first delete button', ()=>{
+  it('should log a "load more" string to console when LoadMore button is clicked', () => {
+    const buttonRef: ElementRef = debugElement.query(By.css('.load-more'));
+    const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
+    button.click();
+    mockData = 'load more';
+
+    expect(console.log).toHaveBeenCalledTimes(1);
+    expect(console.log).toHaveBeenCalledWith(mockData);
+  });
+
+  describe('onItemDelete method (called when delete item button is clicked)', ()=>{
+    let buttonRef: ElementRef;
+    let button: HTMLButtonElement;
+
+    beforeEach(()=>{
+      // gets the delete button rendered in first CourseItemComponent
+      buttonRef = debugElement.query(By.css('.delete'));
+      button = buttonRef.nativeElement as HTMLButtonElement;
+      mockData = mockCourses[0].id;
+    });
 
     it ('should call onItemDelete method with correct ItemId ', ()=>{
       spyOn(component, 'onItemDelete');
-      const button: ElementRef = debugElement.query(By.css('.delete'));
-      (button.nativeElement as HTMLButtonElement).click();
-      mockData = mockCourses[0].id;
+      button.click();
 
       expect(component.onItemDelete).toHaveBeenCalledTimes(1);
       expect(component.onItemDelete).toHaveBeenCalledWith(mockData);
     });
 
     it('should log ItemId in console', () => {
-      const button: ElementRef = debugElement.query(By.css('.delete'));
-      (button.nativeElement as HTMLButtonElement).click();
-      mockData = mockCourses[0].id;
+      button.click();
 
       expect(console.log).toHaveBeenCalledTimes(1);
       expect(console.log).toHaveBeenCalledWith('item Id: ', mockData);
     });
-  });
-
-  it('should log a "load more" string to console when LoadMore button is clicked', () => {
-
-    const button: ElementRef = debugElement.query(By.css('.load-more'));
-    (button.nativeElement as HTMLButtonElement).click();
-    mockData = 'load more';
-
-    expect(console.log).toHaveBeenCalledTimes(1);
-    expect(console.log).toHaveBeenCalledWith(mockData);
   });
 });
