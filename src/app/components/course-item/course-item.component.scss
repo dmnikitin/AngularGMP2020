@@ -1,13 +1,13 @@
 @import "src/mixins.scss";
 
-:host {
+section {
+  border: 1px solid black;
   display: flex;
   justify-content: space-between;
   width: 100%;
   padding: 20px 0;
   margin-bottom: 30px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-
 }
 
 .button {
@@ -25,15 +25,13 @@
 
 .text-wrapper {
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   padding-left: 20px;
   padding-right: 30px;
 }
 
-.text-title {
-  font-size: 24px;
-  margin: 0;
-}
+
 .text-meta {
   @include flex-vertical-center();
 
@@ -62,3 +60,20 @@
   min-width: 150px;
   padding-right: 20px;
 }
+
+.background {
+  background: seagreen;
+}
+
+.text-heading {
+  display: flex;
+  &__title {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  &__star {
+    color: gold;
+  }
+}
+

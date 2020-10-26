@@ -1,15 +1,18 @@
-<ng-container *ngIf="item">
-  <div class="wrapper text-wrapper">
+<section *ngIf="item" [ngClass]="{background: item.rated}" appBorder [createdAt]="item.creationDate">
+  <div class="text-wrapper" >
     <div class="wrapper">
-      <h5 class="text-title">{{ item.title }}</h5>
+      <div class="text-heading">
+        <h5 class="text-heading__title">{{ item.title | uppercase }}</h5>
+        <span *ngIf="item.rated" class="material-icons text-heading__star">star_rate</span>
+      </div>
       <div class="text-meta">
         <div class="text-meta__el">
           <span class="material-icons">access_time</span>
-          <span>{{ item.duration }} min</span>
+          <span>{{ item.duration | duration }}</span>
         </div>
         <div class="text-meta__el">
           <span class="material-icons">calendar_today</span>
-          <span>{{ item.createdAt }}</span>
+          <span>{{ item.creationDate | date : 'mediumDate' }}</span>
         </div>
       </div>
     </div>
@@ -25,4 +28,4 @@
       Delete
     </button>
   </div>
-</ng-container>
+</section>
