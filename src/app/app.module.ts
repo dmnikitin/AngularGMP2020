@@ -15,6 +15,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { BorderDirective } from './directives/border.directive';
+import { DurationPipe } from './pipes/duration.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,11 @@ import { MatButtonModule } from '@angular/material/button';
     BreadcrumbsComponent,
     CourseItemComponent,
     CoursesPageComponent,
-    CourseControlsComponent
+    CourseControlsComponent,
+    BorderDirective,
+    DurationPipe,
+    OrderByPipe,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
