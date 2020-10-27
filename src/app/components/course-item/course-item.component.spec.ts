@@ -74,11 +74,11 @@ describe('CourseItemComponent Standalone tests', () => {
   });
 
   it('should emit itemId to the parent component when handleDelete method is called', () => {
-    spyOn(component.deletedItem, 'emit');
+    spyOn(component.deletedItemEvent, 'emit');
     button = debugElement.query(By.css('.delete'));
     (button.nativeElement as HTMLButtonElement).click();
 
-    expect(component.deletedItem.emit).toHaveBeenCalledWith(mockItem.id);
+    expect(component.deletedItemEvent.emit).toHaveBeenCalledWith(mockItem.id);
   });
 });
 
@@ -103,7 +103,7 @@ describe('CourseItemComponent Class tests', ()=>{
   });
 
   it('should raise the deletedItem event when item is deleted', () => {
-    component.deletedItem.subscribe((id: string) => {
+    component.deletedItemEvent.subscribe((id: string) => {
       expect(id).toBe(component.item.id);
     });
     component.handleDelete(component.item.id);

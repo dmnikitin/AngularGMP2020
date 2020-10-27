@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { ICourse } from 'src/app/models/course';
 
 @Component({
@@ -7,13 +7,13 @@ import { ICourse } from 'src/app/models/course';
   styleUrls: ['./course-item.component.scss']
 })
 export class CourseItemComponent  {
-
-  @Output() public deletedItem: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public deletedItemEvent: EventEmitter<string> = new EventEmitter<string>();
   @Input() public item: ICourse;
+  // @HostBinding('class.section') public sectionClass: boolean = true;
+  //  check if item: Course | undefined
   constructor() { }
 
   public handleDelete(itemId: string): void {
-    this.deletedItem.emit(itemId);
+    this.deletedItemEvent.emit(itemId);
   }
-
 }

@@ -3,10 +3,15 @@
     <input matInput type="text" name="search" [(ngModel)]="searchQuery" placeholder="Type to search">
     <mat-icon matPrefix>search</mat-icon>
   </mat-form-field>
-  <button mat-button type="submit" class="search-button" (click)="showQuery()">Search</button>
+  <button mat-button type="submit" class="search-button" (click)="searchItems()">Search</button>
 </div>
-<button type="button" class="add-button">
-  <span class="material-icons">add</span>
-  Add course
-</button>
-
+<div class="aside-buttons">
+  <button type="button" class="add-button">
+    <span class="material-icons">add</span>
+    Add course
+  </button>
+  <button class="sorting-button" (click)="sortItemsByDate()">
+    <span>Sort courses by date: </span>
+    <span class="sorting-button__arrow">{{ isAscending ? '↑' : '↓' }} </span>
+  </button>
+</div>
