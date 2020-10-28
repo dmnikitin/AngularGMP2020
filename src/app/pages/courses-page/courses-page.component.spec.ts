@@ -6,12 +6,16 @@ import { BreadcrumbsComponent } from 'src/app/components/breadcrumbs/breadcrumbs
 import { CourseControlsComponent } from 'src/app/components/course-controls/course-controls.component';
 import { CourseItemComponent } from 'src/app/components/course-item/course-item.component';
 import { CoursesPageComponent } from './courses-page.component';
+import { BorderDirective } from 'src/app/directives/border.directive';
+import { DurationPipe } from 'src/app/pipes/duration.pipe';
+import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
 import { mockCourses } from 'src/assets/mock-data';
 
 describe('CoursesPageComponent', () => {
   let component: CoursesPageComponent;
   let fixture: ComponentFixture<CoursesPageComponent>;
   let debugElement: DebugElement;
+  let childDebugElement: DebugElement;
   let mockData: string;
 
   beforeEach(async () => {
@@ -20,7 +24,10 @@ describe('CoursesPageComponent', () => {
         CoursesPageComponent,
         CourseControlsComponent,
         CourseItemComponent,
-        BreadcrumbsComponent
+        BreadcrumbsComponent,
+        DurationPipe,
+        OrderByPipe,
+        BorderDirective
       ],
       imports: [ FormsModule ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
@@ -74,6 +81,39 @@ describe('CoursesPageComponent', () => {
 
       expect(console.log).toHaveBeenCalledTimes(1);
       expect(console.log).toHaveBeenCalledWith('item Id: ', mockData);
+    });
+  });
+
+  describe('interactions with course-controls component', () => {
+
+    beforeEach(() => {
+      childDebugElement = fixture.debugElement.query(By.directive(CourseControlsComponent));
+    });
+
+    it('should sort courses list by creation date with provided boolean value', () => {
+      const buttonRef: ElementRef = debugElement.query(By.css('.sorting-button'));
+      const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
+      spyOn(component, 'onItemsSort').and.callThrough();
+      (childDebugElement.context as CourseControlsComponent).isAscending = false;
+      button.click();
+      fixture.detectChanges();
+
+      expect(component.onItemsSort).toHaveBeenCalledTimes(1);
+      expect(component.onItemsSort).toHaveBeenCalledWith(false);
+      expect(component.coursesToBeDisplayed[0].id).toEqual('003');
+    });
+
+    it('should filter courses list with provided filtering value', () => {
+      const buttonRef: ElementRef = debugElement.query(By.css('.search-button'));
+      const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
+      spyOn(component, 'onItemsSearch').and.callThrough();
+      (childDebugElement.context as CourseControlsComponent).searchQuery = '2';
+      button.click();
+      fixture.detectChanges();
+
+      expect(component.onItemsSearch).toHaveBeenCalledTimes(1);
+      expect(component.onItemsSearch).toHaveBeenCalledWith('2');
+      expect(component.coursesToBeDisplayed[0].id).toEqual('002');
     });
   });
 });

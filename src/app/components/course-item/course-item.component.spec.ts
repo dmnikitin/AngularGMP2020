@@ -3,17 +3,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CourseItemComponent } from './course-item.component';
 import { ICourse } from 'src/app/models/course';
+import { BorderDirective } from 'src/app/directives/border.directive';
+import { DurationPipe } from 'src/app/pipes/duration.pipe';
 import { mockCourses } from 'src/assets/mock-data';
 
 @Component({
   template: `
-  <app-course-item [item]="item" (deletedItem)="handleDelete($event)"></app-course-item>`
+  <app-course-item [item]="item" (deletedItemEvent)="handleDelete($event)"></app-course-item>`
 })
 class TestHostComponent {
   public item: ICourse = mockCourses[0];
-  public deletedItem: string;
+  public deletedItemEvent: string;
   public handleDelete(itemId: string): void {
-    this.deletedItem = itemId;
+    this.deletedItemEvent = itemId;
   }
 }
 
@@ -24,7 +26,7 @@ describe('CourseItemComponent TestHost tests', ()=>{
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent, TestHostComponent ]
+      declarations: [ CourseItemComponent, TestHostComponent, BorderDirective, DurationPipe ]
     })
       .compileComponents();
   });
@@ -43,7 +45,7 @@ describe('CourseItemComponent TestHost tests', ()=>{
     button = (fixture.nativeElement as HTMLElement).querySelector('.delete');
     button.click();
 
-    expect(testHost.deletedItem).toBe(testHost.item.id);
+    expect(testHost.deletedItemEvent).toBe(testHost.item.id);
   });
 });
 
@@ -56,7 +58,7 @@ describe('CourseItemComponent Standalone tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent ]
+      declarations: [ CourseItemComponent, BorderDirective, DurationPipe ]
     })
       .compileComponents();
   });
@@ -88,7 +90,7 @@ describe('CourseItemComponent Class tests', ()=>{
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent ]
+      declarations: [ CourseItemComponent, BorderDirective, DurationPipe ]
     })
       .compileComponents();
   });

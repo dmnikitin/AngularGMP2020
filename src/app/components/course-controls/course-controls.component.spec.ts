@@ -30,7 +30,7 @@ describe('CourseControlsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should log to console current input query on clicking the search button', ()=>{
+  it('should emit searchQuery string to the parent component when searchItems method is called', () => {
     const buttonRef: ElementRef = debugElement.query(By.css('.search-button'));
     const inputRef: ElementRef = debugElement.query(By.css('input'));
     const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
@@ -38,12 +38,18 @@ describe('CourseControlsComponent', () => {
     mockData = 'mockInputData';
     input.value = mockData;
     input.dispatchEvent(new Event('input'));
-
-    spyOn(console, 'log');
-    fixture.detectChanges();
+    spyOn(component.searchEvent, 'emit');
     button.click();
 
-    expect(console.log).toHaveBeenCalledTimes(1);
-    expect(console.log).toHaveBeenCalledWith('query is: ', mockData);
+    expect(component.searchEvent.emit).toHaveBeenCalledWith(mockData);
+  });
+
+  it('should emit isAscending boolean to the parent component when sortItemsByDate method is called', () => {
+    const buttonRef: ElementRef = debugElement.query(By.css('.sorting-button'));
+    const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
+    spyOn(component.sortEvent, 'emit');
+    button.click();
+
+    expect(component.sortEvent.emit).toHaveBeenCalledWith(false);
   });
 });
