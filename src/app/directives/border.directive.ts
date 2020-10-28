@@ -1,16 +1,12 @@
 import { Directive, ElementRef, Input, Renderer2, OnInit } from '@angular/core';
-
-enum Colors {
-  green = '#228B22',
-  blue = 	'#0000FF',
-}
+import { Colors, dayInMs, requiredDays } from 'src/assets/variables';
 
 @Directive({
   selector: '[appBorder]'
 })
 export class BorderDirective implements OnInit {
 
-  @Input() public createdAt: string;
+  @Input('appBorder') public createdAt: string;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
@@ -21,10 +17,9 @@ export class BorderDirective implements OnInit {
   public ngOnInit(): void {
     const currentDate: number = Date.now();
     const creationDate: number = Date.parse(this.createdAt);
-    const dayInMs = 86400000;
 
     switch(true) {
-    case (creationDate < currentDate && creationDate >= currentDate - dayInMs*14): {
+    case (creationDate < currentDate && creationDate >= currentDate - dayInMs*requiredDays): {
       this.changeBorder(Colors.green);
       break;
     }
