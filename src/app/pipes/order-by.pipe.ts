@@ -13,8 +13,8 @@ export class OrderByPipe implements PipeTransform {
 
     return items.sort((first: ICourse, second: ICourse) =>
       isAscending
-        ? Date.parse(second.creationDate) - Date.parse(first.creationDate)
-        : Date.parse(first.creationDate) - Date.parse(second.creationDate)
+        ? Date.parse(first.creationDate) - Date.parse(second.creationDate)
+        : Date.parse(second.creationDate) - Date.parse(first.creationDate)
     );
   }
 }
