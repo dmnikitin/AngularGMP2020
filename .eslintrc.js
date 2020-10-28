@@ -1,7 +1,5 @@
 /* eslint-disable */
 
-const { off } = require("process");
-
 module.exports = {
     "env": {
         "browser": true,
