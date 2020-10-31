@@ -1,9 +1,8 @@
-import { CoursesService } from '../../../core/services/courses.service';
 import { Component, OnInit } from '@angular/core';
-import { Course } from 'src/app/models/course';
-import { mockCourses } from 'src/assets/mock-data';
-import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
-import { FilterPipe } from 'src/app/pipes/filter.pipe';
+import { CoursesService } from 'src/app/core/services/courses.service';
+import { OrderByPipe } from 'src/app/courses/pipes/order-by.pipe';
+import { FilterPipe } from 'src/app/courses/pipes/filter.pipe';
+import { Course } from 'src/app/shared/models/course';
 
 @Component({
   selector: 'app-courses-page',

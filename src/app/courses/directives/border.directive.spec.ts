@@ -2,7 +2,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BorderDirective } from './border.directive';
-import { Course } from './../models/course';
+import { Course } from 'src/app/shared/models/course';
 import { Colors } from 'src/assets/variables';
 import { mockCourses } from 'src/assets/mock-data';
 

@@ -10,7 +10,7 @@ describe('DeleteModalComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ DeleteModalComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

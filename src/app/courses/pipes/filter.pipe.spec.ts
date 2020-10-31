@@ -1,6 +1,6 @@
 import { FilterPipe } from './filter.pipe';
 import { mockCourses } from 'src/assets/mock-data';
-import { ICourse } from './../models/course';
+import { ICourse } from 'src/app/shared/models/course';
 
 describe('FilterPipe', () => {
   const pipe: FilterPipe = new FilterPipe();

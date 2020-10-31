@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ICourse } from 'src/app/models/course';
+import { Course } from 'src/app/shared/models/course';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 
@@ -10,7 +10,7 @@ import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 })
 export class CourseItemComponent  {
   @Output() public deletedItemEvent: EventEmitter<string> = new EventEmitter<string>();
-  @Input() public item: ICourse;
+  @Input() public item: Course;
 
   constructor(private dialog: MatDialog) { }
 

@@ -1,4 +1,4 @@
-import { ICourse } from './../models/course';
+import { ICourse } from 'src/app/shared/models/course';
 import { OrderByPipe } from './order-by.pipe';
 import { mockCourses } from 'src/assets/mock-data';
 

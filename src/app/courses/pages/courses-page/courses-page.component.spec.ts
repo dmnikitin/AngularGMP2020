@@ -2,13 +2,15 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, ElementRef } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { BreadcrumbsComponent } from 'src/app/components/breadcrumbs/breadcrumbs.component';
-import { CourseControlsComponent } from 'src/app/components/course-controls/course-controls.component';
-import { CourseItemComponent } from 'src/app/components/course-item/course-item.component';
+import { BreadcrumbsComponent } from 'src/app/courses/components/breadcrumbs/breadcrumbs.component';
+import {
+  CourseControlsComponent
+} from 'src/app/courses/components/course-controls/course-controls.component';
+import { CourseItemComponent } from 'src/app/courses/components/course-item/course-item.component';
 import { CoursesPageComponent } from './courses-page.component';
-import { BorderDirective } from 'src/app/directives/border.directive';
-import { DurationPipe } from 'src/app/pipes/duration.pipe';
-import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
+import { BorderDirective } from 'src/app/courses/directives/border.directive';
+import { DurationPipe } from 'src/app/courses/pipes/duration.pipe';
+import { OrderByPipe } from 'src/app/courses/pipes/order-by.pipe';
 import { mockCourses } from 'src/assets/mock-data';
 
 describe('CoursesPageComponent', () => {
@@ -100,7 +102,7 @@ describe('CoursesPageComponent', () => {
 
       expect(component.onItemsSort).toHaveBeenCalledTimes(1);
       expect(component.onItemsSort).toHaveBeenCalledWith(false);
-      expect(component.coursesToBeDisplayed[0].id).toEqual('003');
+      expect(component.courses[0].id).toEqual('003');
     });
 
     it('should filter courses list with provided filtering value', () => {
@@ -113,7 +115,7 @@ describe('CoursesPageComponent', () => {
 
       expect(component.onItemsSearch).toHaveBeenCalledTimes(1);
       expect(component.onItemsSearch).toHaveBeenCalledWith('2');
-      expect(component.coursesToBeDisplayed[0].id).toEqual('002');
+      expect(component.courses[0].id).toEqual('002');
     });
   });
 });

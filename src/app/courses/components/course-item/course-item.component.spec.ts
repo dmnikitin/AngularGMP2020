@@ -1,10 +1,11 @@
 import { DebugElement, ElementRef, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { CourseItemComponent } from './course-item.component';
-import { ICourse } from 'src/app/models/course';
-import { BorderDirective } from 'src/app/directives/border.directive';
-import { DurationPipe } from 'src/app/pipes/duration.pipe';
+import { ICourse } from 'src/app/shared/models/course';
+import { BorderDirective } from 'src/app/courses/directives/border.directive';
+import { DurationPipe } from 'src/app/courses/pipes/duration.pipe';
 import { mockCourses } from 'src/assets/mock-data';
 
 @Component({
@@ -96,7 +97,8 @@ describe('CourseItemComponent Class tests', ()=>{
   });
 
   beforeEach(() => {
-    component = new CourseItemComponent();
+    let dialog: MatDialog;
+    component = new CourseItemComponent(dialog);
     component.item = mockItem;
   });
 
