@@ -10,11 +10,25 @@
   @include flex-vertical-center();
 }
 
-.video-course {
+.heading {
 	font-size: 18px;
 	font-weight: 700;
 	text-transform: uppercase;
   margin: 0;
+}
+
+.breadcrumbs {
+  @include flex-vertical-center();
+  height: 64px;
+  background: var(--color-white);
+  padding: 0 85px;
+
+  &-text {
+    color: var(--color-dark);
+    font-family: var(--default-font);
+    font-size: 14px;
+    font-weight: 700;
+  }
 }
 
 .user-info {

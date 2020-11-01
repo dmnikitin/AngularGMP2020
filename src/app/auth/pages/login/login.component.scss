@@ -1,0 +1,44 @@
+@import "src/mixins.scss";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main {
+  @include flex-vertical-center();
+  flex: 1 0 0;
+  background: var(--color-teal);
+}
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  max-width: 400px;
+  border: 1px solid;
+  box-shadow: var(--default-shadow);
+  margin: 0 auto;
+  padding: 35px;
+}
+
+.heading {
+  margin: 0 0 15px;
+  font-size: 20px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.login-button {
+  @include blue-button(110px, 36px);
+  background-color: var(--color-grey);
+}
+
+a {
+  line-height: 33px;
+}

@@ -15,4 +15,4 @@ import { SharedModule } from '../shared/shared.module';
     LoginComponent
   ]
 })
-export class AuthenticationModule { }
+export class AuthModule { }

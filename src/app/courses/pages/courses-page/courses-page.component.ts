@@ -25,10 +25,6 @@ export class CoursesPageComponent implements OnInit {
     this.courses = this.coursesService.getList();
   }
 
-  public onLoadMore(): void {
-    console.log('load more');
-  }
-
   public onItemsSort(isAscending: boolean): void {
     const coursesList: Array<Course> = this.coursesService.getList();
     this.courses = this.orderByPipe.transform(coursesList, isAscending);
@@ -37,6 +33,10 @@ export class CoursesPageComponent implements OnInit {
   public onItemsSearch(filteringValue: string): void{
     const coursesList: Array<Course> = this.coursesService.getList();
     this.courses = this.filterPipe.transform(coursesList, filteringValue);
+  }
+
+  public loadMore(): void {
+    console.log('load more');
   }
 
   public ngOnInit(): void {
