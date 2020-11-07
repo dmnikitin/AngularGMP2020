@@ -37,10 +37,15 @@ $AngularGMP-theme: mat-light-theme((
 :root {
   --color-white: #FFF;
   --color-dark: #303240;
+  --color-text-dark: #474A59;
   --color-green: #67A300;
   --color-teal: #F5F6FA;
   --color-blue: #009ECC;
   --color-grey: #858997;
+  --color-gold: #ffd700;
+  --color-pink: rgb(238,174,202);
+  --default-shadow: 0 0 10px rgba(0,0,0,0.5);
+  --default-font: 'Source Sans Pro', sans-serif;
 }
 
 html, body { height: 100%; }

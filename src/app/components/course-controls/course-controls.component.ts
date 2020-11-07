@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-course-controls',
@@ -7,16 +7,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseControlsComponent implements OnInit {
 
+  @Output() public searchEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public sortEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   public searchQuery: string;
+  public isAscending: boolean;
 
   constructor() { }
 
-  public showQuery(): void {
-    console.log('______________________________query is: ', this.searchQuery);
+  public searchItems(): void {
+    this.searchEvent.emit(this.searchQuery);
+  }
+
+  public sortItemsByDate(): void {
+    this.sortEvent.emit(this.isAscending);
+    this.isAscending = !this.isAscending;
   }
 
   public ngOnInit(): void {
     this.searchQuery = '';
+    this.isAscending = false;
   }
 
 }
