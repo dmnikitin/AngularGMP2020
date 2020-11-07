@@ -3,17 +3,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CourseItemComponent } from './course-item.component';
 import { ICourse } from 'src/app/models/course';
+import { BorderDirective } from 'src/app/directives/border.directive';
+import { DurationPipe } from 'src/app/pipes/duration.pipe';
 import { mockCourses } from 'src/assets/mock-data';
 
 @Component({
   template: `
-  <app-course-item [item]="item" (deletedItem)="handleDelete($event)"></app-course-item>`
+  <app-course-item [item]="item" (deletedItemEvent)="handleDelete($event)"></app-course-item>`
 })
 class TestHostComponent {
   public item: ICourse = mockCourses[0];
-  public deletedItem: string;
+  public deletedItemEvent: string;
   public handleDelete(itemId: string): void {
-    this.deletedItem = itemId;
+    this.deletedItemEvent = itemId;
   }
 }
 
@@ -24,7 +26,7 @@ describe('CourseItemComponent TestHost tests', ()=>{
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent, TestHostComponent ]
+      declarations: [ CourseItemComponent, TestHostComponent, BorderDirective, DurationPipe ]
     })
       .compileComponents();
   });
@@ -43,7 +45,7 @@ describe('CourseItemComponent TestHost tests', ()=>{
     button = (fixture.nativeElement as HTMLElement).querySelector('.delete');
     button.click();
 
-    expect(testHost.deletedItem).toBe(testHost.item.id);
+    expect(testHost.deletedItemEvent).toBe(testHost.item.id);
   });
 });
 
@@ -56,7 +58,7 @@ describe('CourseItemComponent Standalone tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent ]
+      declarations: [ CourseItemComponent, BorderDirective, DurationPipe ]
     })
       .compileComponents();
   });
@@ -74,11 +76,11 @@ describe('CourseItemComponent Standalone tests', () => {
   });
 
   it('should emit itemId to the parent component when handleDelete method is called', () => {
-    spyOn(component.deletedItem, 'emit');
+    spyOn(component.deletedItemEvent, 'emit');
     button = debugElement.query(By.css('.delete'));
     (button.nativeElement as HTMLButtonElement).click();
 
-    expect(component.deletedItem.emit).toHaveBeenCalledWith(mockItem.id);
+    expect(component.deletedItemEvent.emit).toHaveBeenCalledWith(mockItem.id);
   });
 });
 
@@ -88,7 +90,7 @@ describe('CourseItemComponent Class tests', ()=>{
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent ]
+      declarations: [ CourseItemComponent, BorderDirective, DurationPipe ]
     })
       .compileComponents();
   });
@@ -103,7 +105,7 @@ describe('CourseItemComponent Class tests', ()=>{
   });
 
   it('should raise the deletedItem event when item is deleted', () => {
-    component.deletedItem.subscribe((id: string) => {
+    component.deletedItemEvent.subscribe((id: string) => {
       expect(id).toBe(component.item.id);
     });
     component.handleDelete(component.item.id);

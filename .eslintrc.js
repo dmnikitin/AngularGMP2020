@@ -1,7 +1,5 @@
 /* eslint-disable */
 
-const { off } = require("process");
-
 module.exports = {
     "env": {
         "browser": true,
@@ -162,6 +160,7 @@ module.exports = {
         "@typescript-eslint/no-non-null-assertion": "error",
         "@typescript-eslint/no-parameter-properties": "off",
         "@typescript-eslint/no-require-imports": "error",
+        "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/no-this-alias": "error",
         "@typescript-eslint/no-unnecessary-type-assertion": "error",
         "@typescript-eslint/no-unsafe-assignment": "error",
@@ -364,12 +363,7 @@ module.exports = {
         ],
         "no-self-assign": "error",
         "no-setter-return": "error",
-        "no-shadow": [
-            "error",
-            {
-                "hoist": "all"
-            }
-        ],
+        "no-shadow": "off",
         "no-shadow-restricted-names": "error",
         "no-sparse-arrays": "error",
         "no-this-before-super": "error",

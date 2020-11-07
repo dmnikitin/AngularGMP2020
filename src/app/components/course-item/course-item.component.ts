@@ -7,13 +7,12 @@ import { ICourse } from 'src/app/models/course';
   styleUrls: ['./course-item.component.scss']
 })
 export class CourseItemComponent  {
-
-  @Output() public deletedItem: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public deletedItemEvent: EventEmitter<string> = new EventEmitter<string>();
   @Input() public item: ICourse;
+
   constructor() { }
 
   public handleDelete(itemId: string): void {
-    this.deletedItem.emit(itemId);
+    this.deletedItemEvent.emit(itemId);
   }
-
 }

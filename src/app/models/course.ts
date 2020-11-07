@@ -1,9 +1,10 @@
 export interface ICourse {
   id: string;
   title: string;
-  createdAt: string;
+  creationDate: string;
   duration: number;
   description: string;
+  rated: boolean;
 }
 
 export class Course implements ICourse {
@@ -11,8 +12,9 @@ export class Course implements ICourse {
   constructor(
     public id: string,
     public title: string,
-    public createdAt: string,
+    public creationDate: string,
     public duration: number,
-    public description: string
+    public description: string,
+    public rated: boolean
   ) {}
 }
