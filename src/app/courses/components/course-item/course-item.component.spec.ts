@@ -24,8 +24,6 @@ class TestHostComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deletedItemEvent = itemId;
-      } else {
-        this.deletedItemEvent = '';
       }
     });
   }
