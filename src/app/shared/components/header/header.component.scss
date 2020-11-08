@@ -1,6 +1,11 @@
 @import "src/mixins.scss";
 
 :host {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
   @include flex-vertical-center();
   @include header();
   justify-content: space-between;
