@@ -37,4 +37,8 @@ export class CoursesService {
   public removeItem(id: string): void {
     this.courses = this.courses.filter((item) => item.id !== id);
   }
+
+  public createItem(item: Course): void {
+    this.courses.push(item);
+  }
 }
