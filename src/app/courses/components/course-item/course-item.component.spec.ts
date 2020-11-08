@@ -1,24 +1,42 @@
 import { DebugElement, ElementRef, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
+import { of, Observable } from 'rxjs';
 import { CourseItemComponent } from './course-item.component';
 import { ICourse } from 'src/app/shared/models/course';
 import { BorderDirective } from 'src/app/courses/directives/border.directive';
 import { DurationPipe } from 'src/app/courses/pipes/duration.pipe';
 import { mockCourses } from 'src/assets/mock-data';
+import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   template: `
   <app-course-item [item]="item" (deletedItemEvent)="handleDelete($event)"></app-course-item>`
 })
 class TestHostComponent {
+  constructor(private dialog: MatDialog) { }
   public item: ICourse = mockCourses[0];
   public deletedItemEvent: string;
   public handleDelete(itemId: string): void {
-    this.deletedItemEvent = itemId;
+    const dialogRef: MatDialogRef<DeleteModalComponent> = this.dialog.open(DeleteModalComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deletedItemEvent = itemId;
+      } else {
+        this.deletedItemEvent = '';
+      }
+    });
   }
 }
+type DialogRefStubFunc = { afterClosed: () => Observable<boolean> };
+type DialogStubFunc = { open: () => DialogRefStubFunc };
+
+const dialogRefStub: DialogRefStubFunc = {
+  afterClosed: () => of(true)
+};
+const dialogStub: DialogStubFunc= { open: () => dialogRefStub };
 
 describe('CourseItemComponent TestHost tests', ()=>{
   let testHost: TestHostComponent;
@@ -27,7 +45,9 @@ describe('CourseItemComponent TestHost tests', ()=>{
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent, TestHostComponent, BorderDirective, DurationPipe ]
+      declarations: [ CourseItemComponent, TestHostComponent, BorderDirective, DurationPipe ],
+      imports: [MatDialogModule, NoopAnimationsModule],
+      providers: [{ provide: MatDialog, useValue: dialogStub }]
     })
       .compileComponents();
   });
@@ -45,8 +65,22 @@ describe('CourseItemComponent TestHost tests', ()=>{
   it('should update the deletedItem property when handleDelete method is called', () => {
     button = (fixture.nativeElement as HTMLElement).querySelector('.delete');
     button.click();
+    fixture.detectChanges();
 
     expect(testHost.deletedItemEvent).toBe(testHost.item.id);
+  });
+
+  it('should not update the deletedItem property if Delete button in dialog was not clicked', () => {
+    dialogRefStub.afterClosed = () => of(false);
+    button = (fixture.nativeElement as HTMLElement).querySelector('.delete');
+    button.click();
+    fixture.detectChanges();
+
+    expect(testHost.deletedItemEvent).toBeUndefined();
+  });
+
+  afterEach(()=>{
+    dialogRefStub.afterClosed = () => of(true);
   });
 });
 
@@ -59,7 +93,9 @@ describe('CourseItemComponent Standalone tests', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent, BorderDirective, DurationPipe ]
+      declarations: [ CourseItemComponent, BorderDirective, DurationPipe ],
+      imports: [MatDialogModule, NoopAnimationsModule],
+      providers: [{ provide: MatDialog, useValue: dialogStub }]
     })
       .compileComponents();
   });
@@ -91,15 +127,18 @@ describe('CourseItemComponent Class tests', ()=>{
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent, BorderDirective, DurationPipe ]
+      declarations: [ CourseItemComponent, BorderDirective, DurationPipe ],
+      providers: [{ provide: MatDialog, useValue: dialogStub }]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    let dialog: MatDialog;
+    const dialog: MatDialog = TestBed.inject(MatDialog);
     component = new CourseItemComponent(dialog);
     component.item = mockItem;
+    spyOn(dialog, 'open').and.returnValue(dialogRefStub as MatDialogRef<DeleteModalComponent>);
+
   });
 
   it('should create new instance of CourseItemComponent from class', () => {

@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement, ElementRef } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { BreadcrumbsComponent } from 'src/app/courses/components/breadcrumbs/breadcrumbs.component';
 import {
   CourseControlsComponent
 } from 'src/app/courses/components/course-controls/course-controls.component';
@@ -11,7 +10,11 @@ import { CoursesPageComponent } from './courses-page.component';
 import { BorderDirective } from 'src/app/courses/directives/border.directive';
 import { DurationPipe } from 'src/app/courses/pipes/duration.pipe';
 import { OrderByPipe } from 'src/app/courses/pipes/order-by.pipe';
-import { mockCourses } from 'src/assets/mock-data';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {  MatDialogModule, MatDialogRef  } from '@angular/material/dialog';
+import { CoursesService } from 'src/app/core/services/courses.service';
 
 describe('CoursesPageComponent', () => {
   let component: CoursesPageComponent;
@@ -26,12 +29,12 @@ describe('CoursesPageComponent', () => {
         CoursesPageComponent,
         CourseControlsComponent,
         CourseItemComponent,
-        BreadcrumbsComponent,
         DurationPipe,
         OrderByPipe,
         BorderDirective
       ],
-      imports: [ FormsModule ],
+      imports: [ FormsModule, SharedModule, RouterTestingModule, NoopAnimationsModule, MatDialogModule ],
+      providers: [CoursesService,   { provide: MatDialogRef, useValue: {} }],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
@@ -59,31 +62,11 @@ describe('CoursesPageComponent', () => {
     expect(console.log).toHaveBeenCalledWith(mockData);
   });
 
-  describe('onItemDelete method (called when delete item button is clicked)', ()=>{
-    let buttonRef: ElementRef;
-    let button: HTMLButtonElement;
+  it('should delete a specified course when onItemDelete method is called', () => {
+    mockData = '002';
+    component.onItemDelete(mockData);
 
-    beforeEach(()=>{
-      // gets the delete button rendered in first CourseItemComponent
-      buttonRef = debugElement.query(By.css('.delete'));
-      button = buttonRef.nativeElement as HTMLButtonElement;
-      mockData = mockCourses[0].id;
-    });
-
-    it ('should call onItemDelete method with correct ItemId ', ()=>{
-      spyOn(component, 'onItemDelete');
-      button.click();
-
-      expect(component.onItemDelete).toHaveBeenCalledTimes(1);
-      expect(component.onItemDelete).toHaveBeenCalledWith(mockData);
-    });
-
-    it('should log ItemId in console', () => {
-      button.click();
-
-      expect(console.log).toHaveBeenCalledTimes(1);
-      expect(console.log).toHaveBeenCalledWith('item Id: ', mockData);
-    });
+    expect(component.courses.length).toEqual(2);
   });
 
   describe('interactions with course-controls component', () => {

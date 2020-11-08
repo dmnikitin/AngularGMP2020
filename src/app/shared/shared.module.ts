@@ -28,6 +28,7 @@ import { FooterComponent } from './components/footer/footer.component';
   ],
   exports:[
     FormsModule,
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatIconModule,

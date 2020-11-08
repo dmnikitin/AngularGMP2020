@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CourseItemComponent } from './components/course-item/course-item.component';
@@ -23,7 +22,6 @@ import { FilterPipe } from './pipes/filter.pipe';
     FilterPipe
   ],
   imports: [
-    CommonModule,
     SharedModule,
     CoursesRoutingModule
   ]
