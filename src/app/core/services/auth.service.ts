@@ -25,7 +25,7 @@ export class AuthService {
     this.authencticationStatus = true;
     this.userName = userName;
     this.accessToken = `token${Math.random()}`;
-    this.router.navigate(['/courses-page']);
+    this.router.navigate(['/courses']);
     localStorage.setItem('userName', this.userName);
     localStorage.setItem('accessToken', this.accessToken);
     console.log('LoggedIn successfully');

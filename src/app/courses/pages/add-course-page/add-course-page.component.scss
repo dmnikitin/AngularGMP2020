@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-teal);
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
