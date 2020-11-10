@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DeleteModalComponent } from '../../components/delete-modal/delete-modal.component';
 import { CoursesService } from 'src/app/core/services/courses.service';
 import { OrderByPipe } from 'src/app/courses/pipes/order-by.pipe';
 import { FilterPipe } from 'src/app/courses/pipes/filter.pipe';
@@ -17,12 +19,18 @@ export class CoursesPageComponent implements OnInit {
   constructor(
     private orderByPipe: OrderByPipe,
     private filterPipe: FilterPipe,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private dialog: MatDialog
   ) { }
 
   public onItemDelete(itemId: string): void {
-    this.coursesService.removeItem(itemId);
-    this.courses = this.coursesService.getList();
+    const dialogRef: MatDialogRef<DeleteModalComponent> = this.dialog.open(DeleteModalComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.coursesService.removeItem(itemId);
+        this.courses = this.coursesService.getList();
+      }
+    });
   }
 
   public onItemsSort(isAscending: boolean): void {
