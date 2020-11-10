@@ -1,8 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CoursesService } from 'src/app/core/services/courses.service';
-import { Course } from 'src/app/shared/models/course';
-import { AddItemModalComponent } from '../add-item-modal/add-item-modal.component';
 
 @Component({
   selector: 'app-course-controls',
@@ -17,7 +14,7 @@ export class CourseControlsComponent implements OnInit {
   public searchQuery: string;
   public isAscending: boolean;
 
-  constructor(private dialog: MatDialog, private coursesService: CoursesService) { }
+  constructor(private coursesService: CoursesService) { }
 
   public searchItems(): void {
     this.searchEvent.emit(this.searchQuery);
@@ -26,15 +23,6 @@ export class CourseControlsComponent implements OnInit {
   public sortItemsByDate(): void {
     this.sortEvent.emit(this.isAscending);
     this.isAscending = !this.isAscending;
-  }
-
-  public handleAddItem(): void {
-    const dialogRef: MatDialogRef<AddItemModalComponent> = this.dialog.open(AddItemModalComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // this.coursesService.createItem();
-      }
-    });
   }
 
   public ngOnInit(): void {

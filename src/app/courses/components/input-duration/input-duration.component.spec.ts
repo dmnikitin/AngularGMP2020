@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddItemModalComponent } from './add-item-modal.component';
+import { InputDurationComponent } from './input-duration.component';
 
-describe('AddItemModalComponent', () => {
-  let component: AddItemModalComponent;
-  let fixture: ComponentFixture<AddItemModalComponent>;
+describe('InputDurationComponent', () => {
+  let component: InputDurationComponent;
+  let fixture: ComponentFixture<InputDurationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddItemModalComponent ]
+      declarations: [ InputDurationComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddItemModalComponent);
+    fixture = TestBed.createComponent(InputDurationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
