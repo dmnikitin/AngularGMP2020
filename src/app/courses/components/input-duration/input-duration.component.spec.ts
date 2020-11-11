@@ -1,4 +1,7 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { DurationPipe } from '../../pipes/duration.pipe';
 
 import { InputDurationComponent } from './input-duration.component';
 
@@ -8,9 +11,11 @@ describe('InputDurationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InputDurationComponent ]
+      declarations: [ InputDurationComponent, DurationPipe ],
+      imports: [ FormsModule ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -42,7 +42,7 @@ describe('AuthService', () => {
     const userInfo: string = service.getUserInfo();
 
     expect(userInfo).toEqual('JohnDoe');
-    expect(router.navigate).toHaveBeenCalledWith(['/courses-page']);
+    expect(router.navigate).toHaveBeenCalledWith(['/courses']);
     expect(console.log).toHaveBeenCalledWith('LoggedIn successfully');
   });
 

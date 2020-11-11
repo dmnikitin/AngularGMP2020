@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { CoursesService } from 'src/app/core/services/courses.service';
 
 @Component({
   selector: 'app-course-controls',
@@ -14,7 +13,7 @@ export class CourseControlsComponent implements OnInit {
   public searchQuery: string;
   public isAscending: boolean;
 
-  constructor(private coursesService: CoursesService) { }
+  constructor() { }
 
   public searchItems(): void {
     this.searchEvent.emit(this.searchQuery);

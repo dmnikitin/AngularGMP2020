@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { InputAuthorsComponent } from './input-authors.component';
 
 describe('InputAuthorsComponent', () => {
@@ -8,9 +9,11 @@ describe('InputAuthorsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InputAuthorsComponent ]
+      declarations: [ InputAuthorsComponent ],
+      imports: [ FormsModule ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
