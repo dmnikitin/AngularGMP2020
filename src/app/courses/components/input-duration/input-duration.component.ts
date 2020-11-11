@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-input-duration',
@@ -7,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputDurationComponent implements OnInit {
 
+  @Input() public duration: string;
+  @Output() public durationChange: EventEmitter<string> = new EventEmitter<string>();
+
   constructor() { }
 
-  public duration: number;
   public ngOnInit(): void {
+  }
+  public onDurationChange(model: string): void {
+    this.durationChange.emit(model);
+    this.duration = model;
   }
 
 }

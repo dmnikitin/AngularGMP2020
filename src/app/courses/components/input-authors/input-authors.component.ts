@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-input-authors',
@@ -7,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputAuthorsComponent implements OnInit {
 
+  @Input() public authors: string;
+  @Output() public authorsChange: EventEmitter<string> = new EventEmitter<string>();
+
   constructor() { }
-  public authors: string;
 
   public ngOnInit(): void {
+  }
+
+  public onAuthorsChange(model: string): void {
+    this.authorsChange.emit(model);
+    this.authors = model;
   }
 
 }

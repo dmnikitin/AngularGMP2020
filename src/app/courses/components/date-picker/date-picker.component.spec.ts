@@ -8,6 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 describe('DatePickerComponent', () => {
   let component: DatePickerComponent;
   let fixture: ComponentFixture<DatePickerComponent>;
+  let mockData: string;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,5 +27,13 @@ describe('DatePickerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit string to parent component when onCreationDateChange is called', () => {
+    spyOn(component.createdAtChange, 'emit');
+    mockData = '12/10/2020';
+    component.onCreationDateChange(mockData);
+
+    expect(component.createdAtChange.emit).toHaveBeenCalledWith(mockData);
   });
 });

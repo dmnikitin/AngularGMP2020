@@ -9,6 +9,9 @@ export class AddCoursePageComponent implements OnInit {
 
   public title: string;
   public description: string;
+  public duration: string;
+  public createdAt: string;
+  public authors: string;
 
   constructor() { }
 

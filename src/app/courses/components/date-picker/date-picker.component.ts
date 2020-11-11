@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-date-picker',
@@ -7,11 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DatePickerComponent implements OnInit {
 
-  constructor() { }
+  @Input() public createdAt: string;
+  @Output() public createdAtChange: EventEmitter<string> = new EventEmitter<string>();
 
-  public creationDate: string;
+  constructor() { }
 
   public ngOnInit(): void {
   }
 
+  public onCreationDateChange(model: string): void {
+    this.createdAtChange.emit(model);
+    this.createdAt = model;
+  }
 }
