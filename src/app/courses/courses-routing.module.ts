@@ -5,7 +5,21 @@ import { AddCoursePageComponent } from './pages/add-course-page/add-course-page.
 
 const routes: Routes = [
   { path: '', component: CoursesPageComponent },
-  { path: 'add', pathMatch: 'full', component: AddCoursePageComponent}
+  {
+    path: 'new',
+    pathMatch: 'full',
+    component: AddCoursePageComponent,
+    data: {
+      page: 'New course'
+    }
+  },
+  {
+    path: ':id',
+    component: AddCoursePageComponent,
+    data: {
+      page: 'Edit course'
+    }
+  }
 ];
 
 @NgModule({
