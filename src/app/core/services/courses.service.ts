@@ -31,6 +31,8 @@ export class CoursesService {
     this.courses = this.courses.map((item) => {
       if (item.id === id) {
         return newData;
+      } else {
+        return item;
       }
     });
   }

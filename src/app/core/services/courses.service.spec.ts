@@ -41,6 +41,7 @@ describe('CoursesService', () => {
     service.updateItem(mockId, mockCourse);
 
     expect(service.courses[1].id).toEqual(mockCourse.id);
+    expect(service.courses[2]).toBeDefined();
   });
 
   it('should remove specified course from array', () => {
