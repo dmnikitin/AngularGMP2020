@@ -1,0 +1,45 @@
+import { Component, OnInit } from '@angular/core';
+import { CoursesService } from 'src/app/core/services/courses.service';
+import { OrderByPipe } from 'src/app/courses/pipes/order-by.pipe';
+import { FilterPipe } from 'src/app/courses/pipes/filter.pipe';
+import { Course } from 'src/app/shared/models/course';
+
+@Component({
+  selector: 'app-courses-page',
+  templateUrl: './courses-page.component.html',
+  styleUrls: ['./courses-page.component.scss'],
+  providers: [OrderByPipe, FilterPipe]
+})
+export class CoursesPageComponent implements OnInit {
+
+  public courses: Array<Course>;
+
+  constructor(
+    private orderByPipe: OrderByPipe,
+    private filterPipe: FilterPipe,
+    private coursesService: CoursesService
+  ) { }
+
+  public onItemDelete(itemId: string): void {
+    this.coursesService.removeItem(itemId);
+    this.courses = this.coursesService.getList();
+  }
+
+  public onItemsSort(isAscending: boolean): void {
+    const coursesList: Array<Course> = this.coursesService.getList();
+    this.courses = this.orderByPipe.transform(coursesList, isAscending);
+  }
+
+  public onItemsSearch(filteringValue: string): void{
+    const coursesList: Array<Course> = this.coursesService.getList();
+    this.courses = this.filterPipe.transform(coursesList, filteringValue);
+  }
+
+  public loadMore(): void {
+    console.log('load more');
+  }
+
+  public ngOnInit(): void {
+    this.courses = this.coursesService.getList();
+  }
+}

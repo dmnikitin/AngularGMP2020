@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CoursesPageComponent } from './pages/courses-page/courses-page.component';
+import { LoginComponent } from './auth/pages/login/login.component';
 
 const routes: Routes = [
-  { path: 'courses-page', component: CoursesPageComponent },
-  { path: '', redirectTo: 'courses-page', pathMatch: 'full' },
-  { path: '**', redirectTo: 'courses-page' }
+  {
+    path: 'courses-page',
+    loadChildren: () => import('./courses/courses.module').then(m =>m.CoursesModule)
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({

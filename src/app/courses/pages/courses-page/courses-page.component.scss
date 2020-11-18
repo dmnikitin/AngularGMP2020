@@ -1,0 +1,49 @@
+@import "src/mixins.scss";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-teal);
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.courses-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 86%;
+  margin: 0 auto;
+}
+
+.no-courses {
+  width: 86%;
+  height: 50px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--default-shadow);
+  font-family: var(--default-font);
+  font-size: 22px;
+}
+
+.button {
+  @include flex-vertical-center();
+  width: 86%;
+  height: 50px;
+  margin: 20px auto 50px;
+  padding: 20px;
+  border: none;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--color-blue);
+  box-shadow: var(--default-shadow);
+  font-family: var(--default-font);
+  font-size: 12px;
+  cursor: pointer;
+}

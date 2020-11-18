@@ -143,7 +143,7 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/no-extra-non-null-assertion": "error",
         "@typescript-eslint/no-extra-semi": "error",
-        "@typescript-eslint/no-floating-promises": "error",
+        "@typescript-eslint/no-floating-promises": 0,
         "@typescript-eslint/no-for-in-array": "error",
         "@typescript-eslint/no-implied-eval": "error",
         "@typescript-eslint/no-inferrable-types": [
@@ -425,7 +425,6 @@ module.exports = {
       {
         "files": ["*-spec.ts","*.spec.ts"],
         "rules": {
-          "@typescript-eslint/no-floating-promises": "off",
           "jasmine/no-expect-in-setup-teardown": "off",
           "@typescript-eslint/unbound-method": "off"
         }
