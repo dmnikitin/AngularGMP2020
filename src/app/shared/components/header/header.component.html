@@ -14,5 +14,6 @@
   </div>
 </div>
 <div class="breadcrumbs" *ngIf="isAuthenticated">
-  <span class="breadcrumbs-text">Courses</span>
+  <a class="breadcrumbs-text" routerLink="/courses">Courses </a>
+  <span class="breadcrumbs-text"> {{ breadcrumbs }}</span>
 </div>

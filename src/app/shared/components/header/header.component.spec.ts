@@ -1,10 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement, ElementRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from './header.component';
 import { LogoComponent } from '../logo/logo.component';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { from, of, Observable } from 'rxjs';
+
+const activatedRoute: { [prop: string]: Observable<Record<string, unknown>>} = {
+  params: from([{id: 1}]),
+  data: of({page: 'New course'})
+};
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -15,12 +21,17 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     router = jasmine.createSpyObj<Router>('router', ['navigate']);
+
     authService = jasmine.createSpyObj<AuthService>('authService', [
       'logout', 'isAuthenticated', 'getUserInfo'
     ]);
     await TestBed.configureTestingModule({
       declarations: [ HeaderComponent, LogoComponent ],
-      providers: [{ provide: Router, useValue: router}, { provide: AuthService, useValue: authService }]
+      providers: [
+        { provide: Router, useValue: router},
+        { provide: AuthService, useValue: authService },
+        { provide: ActivatedRoute, useValue: activatedRoute }
+      ]
     })
       .compileComponents();
   });
