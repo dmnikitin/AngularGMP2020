@@ -1,0 +1,48 @@
+@import "src/mixins.scss";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-teal);
+  height: 100vh;
+}
+
+.main {
+  @include flex-vertical-center();
+  justify-content: center;
+  flex: 1 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 80%;
+  width: 80%;
+  background-color: var(--color-white);
+}
+
+.wrapper > * {
+  margin: 0 20px;
+}
+
+h3 {
+  margin-left: 30px;
+  font-size: 27px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+button {
+  @include blue-button(75px, 50px);
+  background-color: var(--color-green);
+  color: var(--color-white);
+  margin-right: 25px;
+
+  &:first-child {
+    background-color: var(--color-grey);
+    color: var(--color-dark);
+  }
+}

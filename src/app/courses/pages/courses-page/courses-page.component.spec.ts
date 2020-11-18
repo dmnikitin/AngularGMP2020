@@ -13,8 +13,17 @@ import { OrderByPipe } from 'src/app/courses/pipes/order-by.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {  MatDialogModule, MatDialogRef  } from '@angular/material/dialog';
+import {  MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CoursesService } from 'src/app/core/services/courses.service';
+import { Observable, of } from 'rxjs';
+
+type DialogRefStubFunc = { afterClosed: () => Observable<boolean> };
+type DialogStubFunc = { open: () => DialogRefStubFunc };
+
+const dialogRefStub: DialogRefStubFunc = {
+  afterClosed: () => of(true)
+};
+const dialogStub: DialogStubFunc= { open: () => dialogRefStub };
 
 describe('CoursesPageComponent', () => {
   let component: CoursesPageComponent;
@@ -34,7 +43,7 @@ describe('CoursesPageComponent', () => {
         BorderDirective
       ],
       imports: [ FormsModule, SharedModule, RouterTestingModule, NoopAnimationsModule, MatDialogModule ],
-      providers: [CoursesService,   { provide: MatDialogRef, useValue: {} }],
+      providers: [CoursesService, { provide: MatDialog, useValue: dialogStub }],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
@@ -46,6 +55,10 @@ describe('CoursesPageComponent', () => {
     debugElement = fixture.debugElement;
     fixture.detectChanges();
     spyOn(console, 'log');
+  });
+
+  afterEach(()=>{
+    dialogRefStub.afterClosed = () => of(true);
   });
 
   it('should create component', () => {
@@ -65,8 +78,17 @@ describe('CoursesPageComponent', () => {
   it('should delete a specified course when onItemDelete method is called', () => {
     mockData = '002';
     component.onItemDelete(mockData);
+    fixture.detectChanges();
 
     expect(component.courses.length).toEqual(2);
+  });
+
+  it('should not update the deletedItem property if Delete button in dialog was not clicked', () => {
+    dialogRefStub.afterClosed = () => of(false);
+    mockData = '002';
+    component.onItemDelete(mockData);
+
+    expect(component.courses.length).toEqual(3);
   });
 
   describe('interactions with course-controls component', () => {
