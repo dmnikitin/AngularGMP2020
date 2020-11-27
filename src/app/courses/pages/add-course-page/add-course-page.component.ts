@@ -23,8 +23,11 @@ export class AddCoursePageComponent implements OnInit {
   public ngOnInit(): void {
     this.course = { id: '', title: '', duration: 0, creationDate: '', rated: false, description: '' };
     this.pageTitle = this.activatedRoute.snapshot.data.page as string;
+    if (this.pageTitle === 'New course') {
+      return;
+    }
     this.activatedRoute.params.pipe(take(1)).subscribe(params => {
-      const course: Course = this.coursesService.getItemById(params.id);
+      const course: Course = { ...this.coursesService.getItemById(params.id)};
       if (course) {
         this.course = course;
       } else {
@@ -38,7 +41,11 @@ export class AddCoursePageComponent implements OnInit {
   }
 
   public handleAddCourse(): void {
-    this.coursesService.updateItem(this.course.id, this.course);
+    if (this.pageTitle === 'New course') {
+      this.coursesService.createItem(this.course);
+    } else {
+      this.coursesService.updateItem(this.course.id, this.course);
+    }
     this.router.navigate(['courses']);
   }
 }
