@@ -3,6 +3,7 @@ import { ActivatedRoute,Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { CoursesService } from 'src/app/core/services/courses.service';
 import { Course } from 'src/app/shared/models/course';
+import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
 
 @Component({
   selector: 'app-add-course-page',
@@ -26,10 +27,9 @@ export class AddCoursePageComponent implements OnInit {
     if (this.pageTitle === 'New course') {
       return;
     }
-    this.activatedRoute.params.pipe(take(1)).subscribe(params => {
-      const course: Course = { ...this.coursesService.getItemById(params.id)};
-      if (course) {
-        this.course = course;
+    this.activatedRoute.data.pipe(take(1)).subscribe((params: {routeData: BreadcrumbsResolverData}) => {
+      if (params.routeData.course) {
+        this.course = { ...params.routeData.course};
       } else {
         this.router.navigate(['404']);
       }
@@ -42,7 +42,8 @@ export class AddCoursePageComponent implements OnInit {
 
   public handleAddCourse(): void {
     if (this.pageTitle === 'New course') {
-      this.coursesService.createItem(this.course);
+      const newCourseId: string = (this.coursesService.courses.length + 1).toString();
+      this.coursesService.createItem({...this.course, id: newCourseId});
     } else {
       this.coursesService.updateItem(this.course.id, this.course);
     }

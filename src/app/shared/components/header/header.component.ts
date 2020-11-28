@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { CoursesService } from 'src/app/core/services/courses.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { Course } from '../../models/course';
+import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
 
 @Component({
   selector: 'app-header',
@@ -18,8 +17,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService
+    private activatedRoute: ActivatedRoute
   ) { }
 
   public handleLogout(): void {
@@ -29,16 +27,8 @@ export class HeaderComponent implements OnInit {
   public ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
     this.userName = this.authService.getUserInfo();
-    this.activatedRoute.data.pipe(take(1)).subscribe(data => {
-      if (data.page === 'New course') {
-        this.breadcrumbs = `/ ${data.page as string}`;
-      }
-    });
-    this.activatedRoute.params.pipe(take(1)).subscribe(params => {
-      const course: Course = this.coursesService.getItemById(params.id);
-      if (course) {
-        this.breadcrumbs = `/ ${course.title}`;
-      }
+    this.activatedRoute.data.pipe(take(1)).subscribe((params: {routeData: BreadcrumbsResolverData}) => {
+      this.breadcrumbs = params.routeData ? params.routeData.breadcrumbs : '';
     });
   }
 }
