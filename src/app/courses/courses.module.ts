@@ -8,8 +8,6 @@ import { CourseControlsComponent } from './components/course-controls/course-con
 import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
 import { BorderDirective } from './directives/border.directive';
 import { DurationPipe } from './pipes/duration.pipe';
-import { OrderByPipe } from './pipes/order-by.pipe';
-import { FilterPipe } from './pipes/filter.pipe';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { InputDurationComponent } from './components/input-duration/input-duration.component';
 import { InputAuthorsComponent } from './components/input-authors/input-authors.component';
@@ -23,8 +21,6 @@ import { InputAuthorsComponent } from './components/input-authors/input-authors.
     DeleteModalComponent,
     BorderDirective,
     DurationPipe,
-    OrderByPipe,
-    FilterPipe,
     DatePickerComponent,
     InputDurationComponent,
     InputAuthorsComponent

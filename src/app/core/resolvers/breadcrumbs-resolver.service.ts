@@ -6,9 +6,7 @@ import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
 import { switchMap, take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class BreadcrumbsResolverService implements Resolve<BreadcrumbsResolverData>{
 
   constructor(private coursesService: CoursesService) { }

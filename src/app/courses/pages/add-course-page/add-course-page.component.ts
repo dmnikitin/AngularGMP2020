@@ -5,6 +5,17 @@ import { CoursesService } from 'src/app/core/services/courses.service';
 import { Course } from 'src/app/shared/models/course';
 import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
 
+const defaultCourse: Course = {
+  id: 0,
+  name: '',
+  length: 0,
+  date: '',
+  isTopRated: false,
+  description: '',
+  authors: {
+    id: 0,
+    name: ''}
+};
 @Component({
   selector: 'app-add-course-page',
   templateUrl: './add-course-page.component.html',
@@ -22,12 +33,13 @@ export class AddCoursePageComponent implements OnInit {
     private coursesService: CoursesService) { }
 
   public ngOnInit(): void {
-    this.course = { id: '', title: '', duration: 0, creationDate: '', rated: false, description: '' };
+    this.course = defaultCourse;
     this.pageTitle = this.activatedRoute.snapshot.data.page as string;
     if (this.pageTitle === 'New course') {
       return;
     }
     this.activatedRoute.data.pipe(take(1)).subscribe((params: {routeData: BreadcrumbsResolverData}) => {
+      console.log(params);
       if (params.routeData.course) {
         this.course = { ...params.routeData.course};
       } else {
@@ -42,8 +54,8 @@ export class AddCoursePageComponent implements OnInit {
 
   public handleAddCourse(): void {
     if (this.pageTitle === 'New course') {
-      const newCourseId: string = (this.coursesService.courses.length + 1).toString();
-      this.coursesService.createItem({...this.course, id: newCourseId});
+      // const newCourseId: string = (this.coursesService.courses.length + 1).toString();
+      this.coursesService.createItem(this.course);
     } else {
       this.coursesService.updateItem(this.course.id, this.course);
     }

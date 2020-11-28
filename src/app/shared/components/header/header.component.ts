@@ -3,6 +3,8 @@ import { take } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
+import { User } from '../../models/user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +14,7 @@ import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
 export class HeaderComponent implements OnInit {
 
   public isAuthenticated: boolean;
-  public userName: string;
+  public userName: Observable<User>;
   public breadcrumbs: string;
 
   constructor(
