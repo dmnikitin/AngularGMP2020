@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { User } from 'src/app/shared/models/user';
+import { catchError, tap } from 'rxjs/operators';
+import { User, Token } from 'src/app/shared/models/user';
+import { authUrl } from 'src/assets/variables';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,6 @@ import { User } from 'src/app/shared/models/user';
 export class AuthService {
 
   private authencticationStatus: boolean = false;
-  private userName: string;
   private accessToken: string;
 
   constructor(
@@ -19,37 +19,38 @@ export class AuthService {
     private http: HttpClient
   ) {}
 
+  public getToken(): string {
+    return this.accessToken;
+  }
+
   public isAuthenticated(): boolean {
-    const userName: string = localStorage.getItem('userName');
     const accessToken: string = localStorage.getItem('accessToken');
-    if (userName && accessToken) {
+    if (accessToken) {
       this.authencticationStatus = true;
-      this.userName = userName;
+      this.accessToken = accessToken;
     }
     return this.authencticationStatus;
   }
 
-  public login(userName: string, password: string): Observable<string> {
-    const headers: { [key: string]: string } = { login: userName, password };
-    return this.http.post<string>('http://localhost:3004/auth/login', headers)
-      .pipe(tap((token: string)=>{
-        this.accessToken = token;
+  public login(userName: string, password: string): Observable<Token> {
+    const body: Pick<User, 'login' | 'password'> = { login: userName, password };
+    const headers: HttpHeaders = new HttpHeaders().set('token', 'no-token');
+    return this.http.post<Token>(`${authUrl}/login`, body, {headers})
+      .pipe(tap((data: Token)=>{
+        this.accessToken = data.token;
         this.authencticationStatus = true;
-        this.userName = userName;
-        localStorage.setItem('userName', this.userName);
         localStorage.setItem('accessToken', this.accessToken);
+        this.router.navigate(['/courses']);
       }));
   }
 
   public logout(): void {
     this.authencticationStatus = false;
-    this.userName = '';
     this.router.navigate(['/login']);
-    localStorage.removeItem('userName');
     localStorage.removeItem('accessToken');
   }
 
   public getUserInfo(): Observable<User> {
-    return this.http.post<User>('http://localhost:3004/auth/userinfo', this.accessToken);
+    return this.http.post<User>(`${authUrl}/userinfo`, {token: this.accessToken});
   }
 }

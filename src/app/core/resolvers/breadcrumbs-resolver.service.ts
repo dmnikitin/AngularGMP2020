@@ -19,15 +19,12 @@ export class BreadcrumbsResolverService implements Resolve<BreadcrumbsResolverDa
     return this.coursesService.getItemById(id).pipe(
       take(1),
       switchMap((course: Course) => {
-        console.log('🚀 ~  switchMap ~ course', course);
-
         if (page === 'New course') {
           breadcrumbs = `/ ${page as string}`;
         }
         if (course) {
-          breadcrumbs = `/ ${course.name}`;
+          breadcrumbs = `/ ${course.name as string}`;
         }
-        console.log({breadcrumbs, course});
         return of({breadcrumbs, course});
       })
     );
