@@ -10,8 +10,7 @@
     <span class="material-icons">add</span>
     Add course
   </button>
-  <button class="sorting-button" (click)="sortItemsByDate()">
-    <span>Sort courses by date: </span>
-    <span class="sorting-button__arrow">{{ isAscending ? '↑' : '↓' }} </span>
+  <button class="sorting-button" (click)="sortItems()">
+    <span>Sort courses by {{ sortingValue }}: </span>
   </button>
 </div>

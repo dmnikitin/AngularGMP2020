@@ -14,7 +14,8 @@ const defaultCourse: Course = {
   description: '',
   authors: {
     id: 0,
-    name: ''}
+    name: ''
+  }
 };
 @Component({
   selector: 'app-add-course-page',
@@ -39,7 +40,6 @@ export class AddCoursePageComponent implements OnInit {
       return;
     }
     this.activatedRoute.data.pipe(take(1)).subscribe((params: {routeData: BreadcrumbsResolverData}) => {
-      console.log(params);
       if (params.routeData.course) {
         this.course = { ...params.routeData.course};
       } else {
@@ -54,7 +54,6 @@ export class AddCoursePageComponent implements OnInit {
 
   public handleAddCourse(): void {
     if (this.pageTitle === 'New course') {
-      // const newCourseId: string = (this.coursesService.courses.length + 1).toString();
       this.coursesService.createItem(this.course);
     } else {
       this.coursesService.updateItem(this.course.id, this.course);

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { DeleteModalComponent } from '../../components/delete-modal/delete-modal.component';
 import { CoursesService } from 'src/app/core/services/courses.service';
 import { Course } from 'src/app/shared/models/course';
-import { Observable } from 'rxjs';
+import { defaultCoursesCount } from 'src/assets/variables';
 
 @Component({
   selector: 'app-courses-page',
@@ -13,10 +14,9 @@ import { Observable } from 'rxjs';
 export class CoursesPageComponent implements OnInit {
 
   public courses: Observable<Course[]>;
+  private page: number;
 
   constructor(
-    // private orderByPipe: OrderByPipe,
-    // private filterPipe: FilterPipe,
     private coursesService: CoursesService,
     private dialog: MatDialog
   ) { }
@@ -31,25 +31,21 @@ export class CoursesPageComponent implements OnInit {
     });
   }
 
-  public onItemsSort(isAscending: boolean): void {
-    // const coursesList: Array<Course> = this.coursesService.getList();
-    // this.courses = this.orderByPipe.transform(coursesList, isAscending);
-    const sortingValue: string = isAscending ? 'date' : '';
-    this.courses = this.coursesService.getList(3, 3, sortingValue);
+  public onItemsSort(sortingValue: string): void {
+    this.courses = this.coursesService.getList(this.page, defaultCoursesCount, sortingValue);
   }
 
   public onItemsSearch(filteringValue: string): void{
-    // const coursesList: Array<Course> = this.coursesService.getList();
-    // this.courses = this.filterPipe.transform(coursesList, filteringValue);
-    this.courses = this.coursesService.getList(3, 3, undefined, filteringValue);
+    this.courses = this.coursesService.getList(this.page, defaultCoursesCount , null, filteringValue);
   }
 
   public loadMore(): void {
-    // console.log('load more');
-    this.courses = this.coursesService.getList(3, 3);
+    this.page += 1;
+    this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
   }
 
   public ngOnInit(): void {
-    this.courses = this.coursesService.getList(0, 3);
+    this.page = 0;
+    this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
   }
 }

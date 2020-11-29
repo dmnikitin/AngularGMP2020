@@ -11,6 +11,8 @@ interface IUserName {
   lastName: string;
 }
 
+export type Token = { token: string };
+
 export class User implements IUser {
   constructor(
     public id: number,

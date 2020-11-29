@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', component: CoursesPageComponent },
   {
     path: 'new',
-    pathMatch: 'full',
+    // pathMatch: 'full',
     component: AddCoursePageComponent,
     resolve: { routeData: BreadcrumbsResolverService},
     data: {
