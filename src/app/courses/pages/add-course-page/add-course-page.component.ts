@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { catchError, switchMap, take, tap } from 'rxjs/operators';
 import { CoursesService } from 'src/app/core/services/courses.service';
 import { Course } from 'src/app/shared/models/course';
 import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
+import { of } from 'rxjs';
 
 const defaultCourse: Course = {
   id: 0,
@@ -54,9 +55,9 @@ export class AddCoursePageComponent implements OnInit {
 
   public handleAddCourse(): void {
     if (this.pageTitle === 'New course') {
-      this.coursesService.createItem(this.course);
+      this.coursesService.createItem(this.course).pipe(take(1)).subscribe();
     } else {
-      this.coursesService.updateItem(this.course.id, this.course);
+      this.coursesService.updateItem(this.course.id, this.course).pipe(take(1)).subscribe();
     }
     this.router.navigate(['courses']);
   }

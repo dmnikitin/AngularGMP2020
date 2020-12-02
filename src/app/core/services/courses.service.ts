@@ -24,16 +24,14 @@ export class CoursesService {
     return this.http.get<Course>(`${coursesUrl}/${id}`);
   }
 
-  public updateItem(id: number, newData: Course): Observable<Course> {
-    return this.http.patch<Course>(coursesUrl, {id, course: newData});
+  public updateItem(id: number, course: Course): Observable<Course> {
+    return this.http.patch<Course>(`${coursesUrl}/${id}`, course);
   }
   public removeItem(id: number): Observable<Course> {
     return this.http.delete<Course>(`${coursesUrl}/${id}`);
   }
 
   public createItem(item: Course): Observable<Course> {
-    const headers: { item: Course } = { item };
-    console.log('🚀 ~ file: courses.service.ts ~ line 36 ~ CoursesService ~ createItem ~ headers', headers);
-    return this.http.post<Course>(coursesUrl, {headers}).pipe();
+    return this.http.post<Course>(coursesUrl, item);
   }
 }
