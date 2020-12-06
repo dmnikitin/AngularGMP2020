@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
-import { catchError, switchMap, take, tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { CoursesService } from 'src/app/core/services/courses.service';
 import { Course } from 'src/app/shared/models/course';
 import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
-import { of } from 'rxjs';
 
 const defaultCourse: Course = {
   id: 0,

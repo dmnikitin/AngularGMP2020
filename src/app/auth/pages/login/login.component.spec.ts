@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
@@ -8,19 +9,15 @@ import { LoginComponent } from './login.component';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let spyAuthService: AuthService;
+  let authService: AuthService;
 
   beforeEach(async () => {
-    spyAuthService = jasmine.createSpyObj<AuthService>('AuthService', ['login']);
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       imports: [
-        FormsModule, RouterTestingModule
+        FormsModule, RouterTestingModule, HttpClientTestingModule
       ],
-      providers: [{
-        provide: AuthService,
-        useValue: spyAuthService
-      }],
+      providers: [ AuthService ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
@@ -28,10 +25,10 @@ describe('LoginComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
+    authService = TestBed.inject(AuthService);
 
     component = fixture.componentInstance;
     fixture.detectChanges();
-    spyOn(console, 'log');
   });
 
   it('should create', () => {
@@ -39,16 +36,11 @@ describe('LoginComponent', () => {
   });
 
   it('should log user in if credentials provided', () => {
+    spyOn(authService, 'login').and.callThrough();
     component.email = 'email';
     component.password = '123';
     component.handleLogin();
 
-    expect(spyAuthService.login).toHaveBeenCalledWith('email');
-  });
-
-  it('should log to console error message if no credentials provided', () => {
-    component.handleLogin();
-
-    expect(console.log).toHaveBeenCalledWith('please provide credentials');
+    expect(authService.login).toHaveBeenCalledWith('email', '123');
   });
 });

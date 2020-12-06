@@ -9,7 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AddCoursePageComponent } from './add-course-page.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from 'src/app/core/services/courses.service';
-import { Course } from 'src/app/shared/models/course';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AddCourseComponent', () => {
   let component: AddCoursePageComponent;
@@ -17,13 +17,19 @@ describe('AddCourseComponent', () => {
   let debugElement: DebugElement;
   let router: Router;
   let activatedRoute: ActivatedRoute;
-  let id: string;
+  let id: number;
 
   beforeEach(async () => {
 
     await TestBed.configureTestingModule({
       declarations: [ AddCoursePageComponent ],
-      imports: [FormsModule, SharedModule,  NoopAnimationsModule, RouterTestingModule],
+      imports: [
+        FormsModule,
+        SharedModule,
+        NoopAnimationsModule,
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
       providers: [ CoursesService],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
@@ -34,7 +40,7 @@ describe('AddCourseComponent', () => {
     router = TestBed.inject(Router);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
-    id = '003';
+    id = 3;
     activatedRoute.data = of({routeData: { breadcrumbs: 'New course', course: {id}}});
     fixture.detectChanges();
   });
@@ -56,17 +62,14 @@ describe('AddCourseComponent', () => {
     component.ngOnInit();
 
     expect(router.navigate).toHaveBeenCalledWith(['404']);
-    expect(component.course.id).toEqual('');
   });
 
   it('should create a blank course object when route leads to New course page', () => {
     activatedRoute.snapshot.data.page = 'New course';
-    activatedRoute.data = of({page: 'New course', routeData: {}});
-    spyOn(router, 'navigate');
     component.ngOnInit();
 
     expect(component.pageTitle).toEqual('New course');
-    expect(component.course.id).toEqual('');
+    expect(component.course.id).toBeFalsy();
   });
 
   it('should redirect to courses a return button is pressed', () => {
@@ -94,19 +97,18 @@ describe('AddCourseComponent', () => {
   it('should create new course and redirect when an add-course button is pressed', () => {
     const service: CoursesService = TestBed.inject(CoursesService);
     activatedRoute.snapshot.data.page = 'New course';
-    activatedRoute.data = of({page: 'New course', routeData: { breadcrumbs: 'New course', course: {}}});
-    component.ngOnInit();
-
     spyOn(component, 'handleAddCourse').and.callThrough();
     spyOn(service, 'createItem').and.callThrough();
     spyOn(router, 'navigate');
+
+    component.ngOnInit();
+
     const buttonRef: ElementRef = debugElement.query(By.css('.add-course'));
     const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
     button.click();
-    const mockValue: Course = {...component.course, id: '4'};
 
     expect(component.handleAddCourse).toHaveBeenCalledTimes(1);
-    expect(service.createItem).toHaveBeenCalledWith(mockValue);
+    expect(service.createItem).toHaveBeenCalledTimes(1);
     expect(router.navigate).toHaveBeenCalledWith(['courses']);
   });
 });
