@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, Subscription } from 'rxjs';
 import { DeleteModalComponent } from '../../components/delete-modal/delete-modal.component';
 import { CoursesService } from 'src/app/core/services/courses.service';
 import { Course } from 'src/app/shared/models/course';
 import { defaultCoursesCount } from 'src/assets/variables';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { debounceTime, switchMap, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
   styleUrls: ['./courses-page.component.scss']
 })
-export class CoursesPageComponent implements OnInit {
+export class CoursesPageComponent implements OnInit, OnDestroy {
 
   public courses: Observable<Course[]>;
+  private searchSubscription: Subscription;
   private page: number;
 
   constructor(
@@ -43,10 +44,6 @@ export class CoursesPageComponent implements OnInit {
     this.courses = this.coursesService.getList(null, null, sortingValue);
   }
 
-  public onItemsSearch(filteringValue: string): void{
-    this.courses = this.coursesService.getList(null, null , null, filteringValue);
-  }
-
   public loadMore(): void {
     this.page += 1;
     this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
@@ -55,5 +52,21 @@ export class CoursesPageComponent implements OnInit {
   public ngOnInit(): void {
     this.page = 0;
     this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
+    this.searchSubscription = this.coursesService.searchQuery
+      .pipe(
+        debounceTime(2000),
+        switchMap((query: string) => {
+          if (query.length > 2) {
+            this.courses = this.coursesService.getList(null, null, null, query);
+            return this.courses;
+          } else {
+            return EMPTY;
+          }
+        })
+      ).subscribe();
+  }
+
+  public ngOnDestroy(): void {
+    this.searchSubscription.unsubscribe();
   }
 }
