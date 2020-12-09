@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { take, tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
 import { User } from '../../models/user';
 import { Observable } from 'rxjs';
-import { of } from 'rxjs/internal/observable/of';
 
 @Component({
   selector: 'app-header',
