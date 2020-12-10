@@ -3,7 +3,6 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { mockCourses } from 'src/assets/mock-data';
-import { coursesUrl } from 'src/assets/variables';
 import { Course } from 'src/app/shared/models/course';
 import { CoursesService } from './courses.service';
 

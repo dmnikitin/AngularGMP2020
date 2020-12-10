@@ -41,7 +41,7 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
   }
 
   public onItemsSort(sortingValue: string): void {
-    this.courses = this.coursesService.getList(null, null, sortingValue);
+    this.coursesService.getList(null, null, sortingValue);
   }
 
   public loadMore(): void {
@@ -55,12 +55,9 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
     this.searchSubscription = this.coursesService.searchQuery
       .pipe(
         debounceTime(2000),
-        switchMap((query: string) => {
+        tap((query: string) => {
           if (query.length > 2) {
             this.courses = this.coursesService.getList(null, null, null, query);
-            return this.courses;
-          } else {
-            return EMPTY;
           }
         })
       ).subscribe();
