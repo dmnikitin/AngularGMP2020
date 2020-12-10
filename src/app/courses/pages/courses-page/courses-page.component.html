@@ -1,7 +1,8 @@
+<app-loading-block></app-loading-block>
 <app-header></app-header>
 <main class="main">
   <app-course-controls (sortEvent)="onItemsSort($event)"></app-course-controls>
-  <ng-container *ngIf="courses; else noCourses">
+  <ng-container *ngIf="(courses | async)?.length; else noCourses">
     <div class="courses-wrapper">
       <app-course-item *ngFor="let item of courses | async" [item]="item" [index]="item.id" (deletedItemEvent)="onItemDelete($event)"></app-course-item>
     </div>

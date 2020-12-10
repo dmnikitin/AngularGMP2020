@@ -1,4 +1,4 @@
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +10,7 @@ import { AuthModule } from './auth/auth.module';
     AppComponent
   ],
   imports: [
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
     AuthModule
