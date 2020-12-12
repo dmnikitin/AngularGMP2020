@@ -124,19 +124,5 @@ describe('CoursesPageComponent', () => {
       expect(coursesService.getList).toHaveBeenCalledWith(null, null, mockString);
     });
 
-    // it('should filter courses list with provided filtering value', () => {
-    //   mockString = '2';
-    //   const buttonRef: ElementRef = debugElement.query(By.css('.search-button'));
-    //   const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
-    //   spyOn(component, 'onItemsSearch').and.callThrough();
-    //   (childDebugElement.context as CourseControlsComponent).searchQuery = mockString;
-    //   button.click();
-    //   fixture.detectChanges();
-
-    //   expect(component.onItemsSearch).toHaveBeenCalledTimes(1);
-    //   expect(component.onItemsSearch).toHaveBeenCalledWith(mockString);
-    //   expect(coursesService.getList).toHaveBeenCalledTimes(1);
-    //   expect(coursesService.getList).toHaveBeenCalledWith(null, null, null, mockString);
-    // });
   });
 });

@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { User, Token } from 'src/app/shared/models/user';
 import { authUrl } from 'src/assets/variables';
 
@@ -43,8 +43,7 @@ export class AuthService {
         this.isAuthenticated.next(true);
         localStorage.setItem('accessToken', this.accessToken);
         this.router.navigate(['/courses']);
-      }),
-      catchError((err: Response) => throwError(err.statusText))
+      })
     );
   }
 
@@ -59,10 +58,6 @@ export class AuthService {
       tap(user => {
         this.user.next(user);
         this.isAuthenticated.next(true);
-      }),
-      catchError((err: Response) => {
-        this.router.navigate(['login']);
-        return throwError(err.statusText);
       })
     );
   }

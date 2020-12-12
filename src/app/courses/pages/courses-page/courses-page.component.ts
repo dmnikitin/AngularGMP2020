@@ -41,7 +41,7 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
   }
 
   public onItemsSort(sortingValue: string): void {
-    this.coursesService.getList(null, null, sortingValue);
+    this.courses = this.coursesService.getList(null, null, sortingValue);
   }
 
   public loadMore(): void {

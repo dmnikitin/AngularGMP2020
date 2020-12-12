@@ -75,4 +75,14 @@ describe('CoursesService', () => {
     });
   });
 
+  it('should send request with correct params', () => {
+    service.getList(1, 2, 'sortString', 'searchString').subscribe();
+    // eslint-disable-next-line @typescript-eslint/tslint/config
+    const url = 'http://localhost:3004/courses?start=1&count=2&sort=sortString&textFragment=searchString';
+    const req: TestRequest = httpTestingController.expectOne(url);
+
+    expect(req.request.method).toBe('GET');
+    expect(req.request.params.get('start')).toEqual('1');
+  });
+
 });
