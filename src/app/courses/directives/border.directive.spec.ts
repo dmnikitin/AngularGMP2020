@@ -8,7 +8,7 @@ import { mockCourses } from 'src/assets/mock-data';
 
 @Component({
   template: `
-  <div [appBorder]="item.creationDate"> Green border </div>
+  <div [appBorder]="item.date"> Green border </div>
   <div appBorder="2021-11-09"> Blue border </div>
   <div appBorder="2017-12-03"> No border </div>
   <div appBorder> No border </div>

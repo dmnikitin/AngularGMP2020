@@ -3,7 +3,7 @@
   <app-course-controls (searchEvent)="onItemsSearch($event)" (sortEvent)="onItemsSort($event)"></app-course-controls>
   <ng-container *ngIf="courses; else noCourses">
     <div class="courses-wrapper">
-      <app-course-item *ngFor="let item of courses" [item]="item" [index]="item.id" (deletedItemEvent)="onItemDelete($event)"></app-course-item>
+      <app-course-item *ngFor="let item of courses | async" [item]="item" [index]="item.id" (deletedItemEvent)="onItemDelete($event)"></app-course-item>
     </div>
     <button type="button" class="button load-more" (click)="loadMore()">Load more</button>
   </ng-container>

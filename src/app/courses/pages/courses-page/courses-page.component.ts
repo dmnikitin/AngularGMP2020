@@ -1,53 +1,59 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { EMPTY, Observable } from 'rxjs';
 import { DeleteModalComponent } from '../../components/delete-modal/delete-modal.component';
 import { CoursesService } from 'src/app/core/services/courses.service';
-import { OrderByPipe } from 'src/app/courses/pipes/order-by.pipe';
-import { FilterPipe } from 'src/app/courses/pipes/filter.pipe';
 import { Course } from 'src/app/shared/models/course';
+import { defaultCoursesCount } from 'src/assets/variables';
+import { switchMap, take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
-  styleUrls: ['./courses-page.component.scss'],
-  providers: [OrderByPipe, FilterPipe]
+  styleUrls: ['./courses-page.component.scss']
 })
 export class CoursesPageComponent implements OnInit {
 
-  public courses: Array<Course>;
+  public courses: Observable<Course[]>;
+  private page: number;
 
   constructor(
-    private orderByPipe: OrderByPipe,
-    private filterPipe: FilterPipe,
     private coursesService: CoursesService,
     private dialog: MatDialog
   ) { }
 
-  public onItemDelete(itemId: string): void {
+  public onItemDelete(itemId: number): void {
     const dialogRef: MatDialogRef<DeleteModalComponent> = this.dialog.open(DeleteModalComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.coursesService.removeItem(itemId);
-        this.courses = this.coursesService.getList();
-      }
-    });
+    dialogRef.afterClosed()
+      .pipe(
+        take(1),
+        switchMap(result => {
+          if (result) {
+            return this.coursesService.removeItem(itemId).pipe(
+              tap(() => {
+                this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
+              })
+            );
+          }
+          return EMPTY;
+        })).subscribe();
   }
 
-  public onItemsSort(isAscending: boolean): void {
-    const coursesList: Array<Course> = this.coursesService.getList();
-    this.courses = this.orderByPipe.transform(coursesList, isAscending);
+  public onItemsSort(sortingValue: string): void {
+    this.courses = this.coursesService.getList(null, null, sortingValue);
   }
 
   public onItemsSearch(filteringValue: string): void{
-    const coursesList: Array<Course> = this.coursesService.getList();
-    this.courses = this.filterPipe.transform(coursesList, filteringValue);
+    this.courses = this.coursesService.getList(null, null , null, filteringValue);
   }
 
   public loadMore(): void {
-    console.log('load more');
+    this.page += 1;
+    this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
   }
 
   public ngOnInit(): void {
-    this.courses = this.coursesService.getList();
+    this.page = 0;
+    this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
   }
 }

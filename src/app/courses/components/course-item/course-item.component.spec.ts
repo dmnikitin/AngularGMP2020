@@ -16,8 +16,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 class TestHostComponent {
   constructor() { }
   public item: ICourse = mockCourses[0];
-  public deletedItemEvent: string;
-  public handleDelete(itemId: string): void {
+  public deletedItemEvent: number;
+  public handleDelete(itemId: number): void {
     this.deletedItemEvent = itemId;
   }
 }
@@ -111,7 +111,7 @@ describe('CourseItemComponent Class tests', ()=>{
   });
 
   it('should raise the deletedItem event when item is deleted', () => {
-    component.deletedItemEvent.subscribe((id: string) => {
+    component.deletedItemEvent.subscribe((id: number) => {
       expect(id).toBe(component.item.id);
     });
     component.handleDelete(component.item.id);

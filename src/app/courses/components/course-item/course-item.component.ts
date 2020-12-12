@@ -8,13 +8,13 @@ import { Course } from 'src/app/shared/models/course';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseItemComponent  {
-  @Output() public deletedItemEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public deletedItemEvent: EventEmitter<number> = new EventEmitter<number>();
   @Input() public item: Course;
   @Input() public index: string;
 
   constructor() { }
 
-  public handleDelete(itemId: string): void {
+  public handleDelete(itemId: number): void {
     this.deletedItemEvent.emit(itemId);
   }
 }
