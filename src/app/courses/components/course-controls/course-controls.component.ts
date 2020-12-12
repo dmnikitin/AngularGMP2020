@@ -28,5 +28,4 @@ export class CourseControlsComponent implements OnInit {
     this.searchQuery = '';
     this.isAscending = false;
   }
-
 }

@@ -1,0 +1,22 @@
+<app-header></app-header>
+<main class="main">
+  <div class="wrapper">
+    <h3> {{pageTitle}} </h3>
+    <mat-form-field class="example-form-field">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" [(ngModel)]="course.title" required>
+    </mat-form-field>
+    <mat-form-field class="example-form-field">
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="course.description" required></textarea>
+    </mat-form-field>
+    <app-input-duration [(duration)]="course.duration"></app-input-duration>
+    <app-date-picker [(createdAt)]="course.creationDate"></app-date-picker>
+    <app-input-authors [(authors)]="authors"></app-input-authors>
+    <div class="buttons">
+      <button mat-button class="return" (click)="handleReturn()">Cancel</button>
+      <button mat-button cdkFocusInitial class="add-course" (click)="handleAddCourse()">Save</button>
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>
