@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -14,11 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   public handleLogin(): void {
-    if (this.email && this.password) {
-      this.authService.login(this.email);
-    } else {
-      console.log('please provide credentials');
-    }
+    this.authService.login(this.email, this.password)
+      .pipe(take(1)).subscribe();
   }
 
   public ngOnInit(): void {

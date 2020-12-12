@@ -44,12 +44,12 @@ describe('CourseControlsComponent', () => {
     expect(component.searchEvent.emit).toHaveBeenCalledWith(mockData);
   });
 
-  it('should emit isAscending boolean to the parent component when sortItemsByDate method is called', () => {
+  it('should emit sorting string to the parent component when sortItemsByDate method is called', () => {
     const buttonRef: ElementRef = debugElement.query(By.css('.sorting-button'));
     const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
     spyOn(component.sortEvent, 'emit');
     button.click();
 
-    expect(component.sortEvent.emit).toHaveBeenCalledWith(false);
+    expect(component.sortEvent.emit).toHaveBeenCalledWith('date');
   });
 });

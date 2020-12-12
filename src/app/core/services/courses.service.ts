@@ -1,46 +1,37 @@
 import { Injectable } from '@angular/core';
-import { mockCourses } from 'src/assets/mock-data';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Course } from 'src/app/shared/models/course';
+import { Observable } from 'rxjs';
+import { coursesUrl } from 'src/assets/variables';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
 
-  private coursesArray: Array<Course> = Array.from(mockCourses);
+  constructor(private http: HttpClient) { }
 
-  public get courses(): Array<Course> {
-    return this.coursesArray;
+  public getList(start?: number, count?: number, sort?: string, textFragment?: string): Observable<Course[]>{
+    const params: HttpParams = new HttpParams()
+      .append('start', start ? start.toString() : '')
+      .append('count', count ? count.toString() : '')
+      .append('sort', sort ? sort : '')
+      .append('textFragment', textFragment ? textFragment : '');
+    return this.http.get<Course[]>(coursesUrl, {params});
   }
 
-  public set courses(newCourses: Array<Course>) {
-    this.coursesArray = newCourses;
+  public getItemById(id: number):  Observable<Course> {
+    return this.http.get<Course>(`${coursesUrl}/${id}`);
   }
 
-  constructor() { }
-
-  public getList(): Array<Course>{
-    return this.courses;
+  public updateItem(id: number, course: Course): Observable<Course> {
+    return this.http.patch<Course>(`${coursesUrl}/${id}`, course);
+  }
+  public removeItem(id: number): Observable<Course> {
+    return this.http.delete<Course>(`${coursesUrl}/${id}`);
   }
 
-  public getItemById(id: string): Course {
-    return this.courses.find((course)=> course.id === id );
-  }
-
-  public updateItem(id: string, newData: Course): void {
-    this.courses = this.courses.map((item) => {
-      if (item.id === id) {
-        return newData;
-      } else {
-        return item;
-      }
-    });
-  }
-  public removeItem(id: string): void {
-    this.courses = this.courses.filter((item) => item.id !== id);
-  }
-
-  public createItem(item: Course): void {
-    this.courses.push(item);
+  public createItem(item: Course): Observable<Course> {
+    return this.http.post<Course>(coursesUrl, item);
   }
 }

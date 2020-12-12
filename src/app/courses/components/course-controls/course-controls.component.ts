@@ -8,10 +8,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class CourseControlsComponent implements OnInit {
 
   @Output() public searchEvent: EventEmitter<string> = new EventEmitter<string>();
-  @Output() public sortEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() public sortEvent: EventEmitter<string> = new EventEmitter<string>();
 
   public searchQuery: string;
-  public isAscending: boolean;
+  public sortingValue: string;
+
+  public route: string = '/courses/new';
 
   constructor() { }
 
@@ -19,13 +21,13 @@ export class CourseControlsComponent implements OnInit {
     this.searchEvent.emit(this.searchQuery);
   }
 
-  public sortItemsByDate(): void {
-    this.sortEvent.emit(this.isAscending);
-    this.isAscending = !this.isAscending;
+  public sortItems(): void {
+    this.sortEvent.emit(this.sortingValue);
+    this.sortingValue = this.sortingValue === 'length' ? 'date' : 'length';
   }
 
   public ngOnInit(): void {
     this.searchQuery = '';
-    this.isAscending = false;
+    this.sortingValue = 'date';
   }
 }

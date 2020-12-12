@@ -6,3 +6,8 @@ export enum Colors {
 
 export const dayInMs: number = 86400000;
 export const requiredDays: number = 14;
+
+export const coursesUrl: string = 'http://localhost:3004/courses';
+export const authUrl: string = 'http://localhost:3004/auth';
+
+export const defaultCoursesCount: number = 9;

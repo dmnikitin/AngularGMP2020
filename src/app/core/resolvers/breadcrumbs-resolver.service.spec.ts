@@ -1,21 +1,27 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
+import { mockCourses } from 'src/assets/mock-data';
 import { CoursesService } from '../services/courses.service';
 import { BreadcrumbsResolverService } from './breadcrumbs-resolver.service';
 
 describe('BreadcrumbsResolverService', () => {
   let service: BreadcrumbsResolverService;
+  let coursesService: CoursesService;
   let route: ActivatedRouteSnapshot;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([])
-      ]
+      imports: [ RouterTestingModule.withRoutes([]), HttpClientTestingModule ],
+      providers: [ CoursesService ]
     });
     service = TestBed.inject(BreadcrumbsResolverService);
+    coursesService = TestBed.inject(CoursesService);
     route = new ActivatedRouteSnapshot();
+    spyOn(coursesService, 'getItemById').and.returnValue(of(mockCourses[1]));
   });
 
   it('should be created', () => {
@@ -24,25 +30,18 @@ describe('BreadcrumbsResolverService', () => {
 
   it('should resolve breadcrumbs: "/ New course" when routed from new course page', () => {
     route.params = { id: '' };
-    route.data = { page: 'New course' };
-
-    expect(service.resolve(route).breadcrumbs).toEqual('/ New course');
-  });
-
-  it('should resolve empty breadcrumbs when routed from undisclosed page', () => {
-    route.params = { id: '' };
-    route.data = { page: '' };
-
-    expect(service.resolve(route).breadcrumbs).toBeFalsy();
+    service.resolve(route).subscribe(result => {
+      expect((result as BreadcrumbsResolverData).breadcrumbs ).toEqual('/ New course');
+    });
   });
 
   it('should resolve breadcrumbs with course provided in route', () => {
-    TestBed.overrideProvider(CoursesService, {useValue: {
-      getItemById: ()=>({id: '003'})
-    }});
-    route.params = { id: '003' };
-    route.data = { page: 'Edit course', routeData: {course: {id: '003'}}};
-
-    expect(service.resolve(route).course.id).toEqual('003');
+    route.params = { id: 2 };
+    service.resolve(route).subscribe(result => {
+      expect((result as BreadcrumbsResolverData)).toEqual({
+        breadcrumbs: `/ ${mockCourses[1].name}`,
+        course: mockCourses[1]
+      });
+    });
   });
 });
