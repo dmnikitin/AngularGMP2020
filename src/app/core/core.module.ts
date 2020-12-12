@@ -1,7 +1,5 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-
-@NgModule({
-})
+@NgModule({ })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {

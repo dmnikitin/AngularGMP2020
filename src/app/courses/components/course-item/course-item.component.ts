@@ -10,6 +10,7 @@ import { Course } from 'src/app/shared/models/course';
 export class CourseItemComponent  {
   @Output() public deletedItemEvent: EventEmitter<string> = new EventEmitter<string>();
   @Input() public item: Course;
+  @Input() public index: string;
 
   constructor() { }
 

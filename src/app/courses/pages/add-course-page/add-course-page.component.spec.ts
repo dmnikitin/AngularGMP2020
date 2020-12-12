@@ -1,58 +1,112 @@
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ElementRef, DebugElement, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
 import { SharedModule } from 'src/app/shared/shared.module';
-
 import { AddCoursePageComponent } from './add-course-page.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CoursesService } from 'src/app/core/services/courses.service';
+import { Course } from 'src/app/shared/models/course';
 
-describe('AddItemModalComponent', () => {
+describe('AddCourseComponent', () => {
   let component: AddCoursePageComponent;
   let fixture: ComponentFixture<AddCoursePageComponent>;
   let debugElement: DebugElement;
-  let mockData: string;
+  let router: Router;
+  let activatedRoute: ActivatedRoute;
+  let id: string;
 
   beforeEach(async () => {
+
     await TestBed.configureTestingModule({
       declarations: [ AddCoursePageComponent ],
-      imports: [FormsModule, SharedModule, RouterTestingModule, NoopAnimationsModule],
+      imports: [FormsModule, SharedModule,  NoopAnimationsModule, RouterTestingModule],
+      providers: [ CoursesService],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
       .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(AddCoursePageComponent);
+    activatedRoute = TestBed.inject(ActivatedRoute);
+    router = TestBed.inject(Router);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
+    id = '003';
+    activatedRoute.data = of({routeData: { breadcrumbs: 'New course', course: {id}}});
     fixture.detectChanges();
-    spyOn(console, 'log');
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should log a message when a return button is pressed', () => {
+  it('should show course if correct params value was passed ', () => {
+    component.ngOnInit();
+
+    expect(component.course.id).toEqual(id);
+  });
+
+  it('should navigate to 404 if params value is not equal to one of courses.id', () => {
+    activatedRoute.data = of({routeData: { breadcrumbs: 'New course'}});
+    spyOn(router, 'navigate');
+
+    component.ngOnInit();
+
+    expect(router.navigate).toHaveBeenCalledWith(['404']);
+    expect(component.course.id).toEqual('');
+  });
+
+  it('should create a blank course object when route leads to New course page', () => {
+    activatedRoute.snapshot.data.page = 'New course';
+    activatedRoute.data = of({page: 'New course', routeData: {}});
+    spyOn(router, 'navigate');
+    component.ngOnInit();
+
+    expect(component.pageTitle).toEqual('New course');
+    expect(component.course.id).toEqual('');
+  });
+
+  it('should redirect to courses a return button is pressed', () => {
+    spyOn(component, 'handleReturn').and.callThrough();
+    spyOn(router, 'navigate');
     const buttonRef: ElementRef = debugElement.query(By.css('.return'));
     const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
     button.click();
-    mockData = 'return';
 
-    expect(console.log).toHaveBeenCalledTimes(1);
-    expect(console.log).toHaveBeenCalledWith(mockData);
+    expect(component.handleReturn).toHaveBeenCalledTimes(1);
+    expect(router.navigate).toHaveBeenCalledWith(['courses']);
   });
 
-  it('should log a message when an add-course button is pressed', () => {
+  it('should update course and redirect when an edit-course button is pressed', () => {
+    spyOn(component, 'handleAddCourse').and.callThrough();
+    spyOn(router, 'navigate');
     const buttonRef: ElementRef = debugElement.query(By.css('.add-course'));
     const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
     button.click();
-    mockData = 'addCourse';
 
-    expect(console.log).toHaveBeenCalledTimes(1);
-    expect(console.log).toHaveBeenCalledWith(mockData);
+    expect(component.handleAddCourse).toHaveBeenCalledTimes(1);
+    expect(router.navigate).toHaveBeenCalledWith(['courses']);
   });
 
+  it('should create new course and redirect when an add-course button is pressed', () => {
+    const service: CoursesService = TestBed.inject(CoursesService);
+    activatedRoute.snapshot.data.page = 'New course';
+    activatedRoute.data = of({page: 'New course', routeData: { breadcrumbs: 'New course', course: {}}});
+    component.ngOnInit();
+
+    spyOn(component, 'handleAddCourse').and.callThrough();
+    spyOn(service, 'createItem').and.callThrough();
+    spyOn(router, 'navigate');
+    const buttonRef: ElementRef = debugElement.query(By.css('.add-course'));
+    const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
+    button.click();
+    const mockValue: Course = {...component.course, id: '4'};
+
+    expect(component.handleAddCourse).toHaveBeenCalledTimes(1);
+    expect(service.createItem).toHaveBeenCalledWith(mockValue);
+    expect(router.navigate).toHaveBeenCalledWith(['courses']);
+  });
 });
