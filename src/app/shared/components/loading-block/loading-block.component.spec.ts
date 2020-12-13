@@ -10,7 +10,7 @@ describe('LoadingBlockComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ LoadingBlockComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
