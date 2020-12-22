@@ -5,14 +5,17 @@ import { ApiCallInterceptor } from './interceptors/api-call.interceptor';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CoursesEffects } from './store/effects/courses.effect';
 import { coursesReducer } from './store/reducers/courses.reducer';
 import { UserEffects } from './store/effects/user.effects';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   imports: [
     HttpClientModule,
     StoreModule.forRoot({ courses: coursesReducer, user: userReducer }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([CoursesEffects, UserEffects])
   ],
   providers: [
