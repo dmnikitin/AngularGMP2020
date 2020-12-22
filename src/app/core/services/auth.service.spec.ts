@@ -12,7 +12,7 @@ import { throwError } from 'rxjs';
 const mockUser: User = {
   id: 1,
   name: {firstName: 'john', lastName: 'doe'},
-  token: 'fakeToken',
+  fakeToken: 'fakeToken',
   login: 'admin',
   password: 'asdmin'
 };
@@ -55,7 +55,7 @@ describe('AuthService', () => {
   it('should return user when getUserInfo method is called', () => {
     spyOn(httpClient, 'post').and.returnValue(of(mockUser));
     service.getUserInfo().subscribe(user => {
-      expect(user.token).toEqual(mockUser.token);
+      expect(user.fakeToken).toEqual(mockUser.fakeToken);
     });
   });
 
@@ -70,19 +70,11 @@ describe('AuthService', () => {
   it('should login user if credentials provided', () => {
     spyOn(httpClient, 'post').and.returnValue(of({token: 'fakeToken'}));
     service.login('JohnDoe', 'password').subscribe(token => {
-      const newToken: string = service.getToken();
+      const newToken: string = service.token;
 
       expect(token.token).toEqual('fakeToken');
       expect(newToken).toEqual('fakeToken');
       expect(router.navigate).toHaveBeenCalledWith(['/courses']);
     });
-  });
-
-  it('should return authenticationStatus: false if user logs out ', () => {
-    spyOn(localStorage, 'removeItem');
-    service.logout();
-
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
-    expect(localStorage.removeItem).toHaveBeenCalledTimes(1);
   });
 });

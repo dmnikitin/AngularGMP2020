@@ -15,27 +15,25 @@ export enum CoursesActions {
   createCourseSuccess = 'CREATE_COURSE_SUCCESS',
 }
 
+type ActionCreatorPayload<T extends string, K> = ActionCreator<T, (props: K ) => K & TypedAction<T>>;
 type GetCoursesListArgs = { start?: number; count?: number; sort?: string; textFragment?: string };
-type ICourseId = { id: number; course: Course };
-type Payload<T> = { payload: T};
-
-type ActionCreatorPayload<T extends string, K> =
-  ActionCreator<T, (props: K ) => K & TypedAction<T>>;
+type DefaultPayload = { id?: number; course?: Course };
+type Payload<T> = { payload: T };
 
 export const getCourses: ActionCreatorPayload<CoursesActions.getCourses, GetCoursesListArgs> =
   createAction(CoursesActions.getCourses, props<GetCoursesListArgs>());
 
-export const getCourseById: ActionCreatorPayload<CoursesActions.getCourseById, {id: number}> =
-  createAction(CoursesActions.getCourseById, props<{id: number}>());
+export const getCourseById: ActionCreatorPayload<CoursesActions.getCourseById, DefaultPayload> =
+  createAction(CoursesActions.getCourseById, props<DefaultPayload>());
 
-export const updateCourse: ActionCreatorPayload<CoursesActions.updateCourse, ICourseId> =
-  createAction(CoursesActions.updateCourse, props<ICourseId>());
+export const updateCourse: ActionCreatorPayload<CoursesActions.updateCourse, DefaultPayload> =
+  createAction(CoursesActions.updateCourse, props<DefaultPayload>());
 
-export const deleteCourse: ActionCreatorPayload<CoursesActions.deleteCourse, {id: number}> =
-  createAction(CoursesActions.deleteCourse, props<{id: number}>());
+export const deleteCourse: ActionCreatorPayload<CoursesActions.deleteCourse, DefaultPayload> =
+  createAction(CoursesActions.deleteCourse, props<DefaultPayload>());
 
-export const createCourse: ActionCreatorPayload<CoursesActions.createCourse, {course: Course}> =
-  createAction(CoursesActions.createCourse, props<{course: Course}>());
+export const createCourse: ActionCreatorPayload<CoursesActions.createCourse, DefaultPayload> =
+  createAction(CoursesActions.createCourse, props<DefaultPayload>());
 
 export const getCoursesSuccess: ActionCreatorPayload<CoursesActions.getCoursesSuccess, Payload<Course[]>> =
   createAction(CoursesActions.getCoursesSuccess, props<Payload<Course[]>>());

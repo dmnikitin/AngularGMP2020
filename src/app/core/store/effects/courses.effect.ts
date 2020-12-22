@@ -22,11 +22,12 @@ export class CoursesEffects {
 
   public getCourseById$: unknown = createEffect(() => this.actions$.pipe(
     ofType(CoursesActions.getCourseById),
-    mergeMap(({ id }) => this.coursesService.getItemById(id)
-      .pipe(
-        map(course => ({ type: CoursesActions.getCourseByIdSuccess, payload: course })),
-        catchError(() => EMPTY)
-      ))
+    mergeMap(({ id }) =>
+      this.coursesService.getItemById(id)
+        .pipe(
+          map(course => ({ type: CoursesActions.getCourseByIdSuccess, payload: course })),
+          catchError(() => EMPTY)
+        ))
   ));
 
   public updateCourse$: unknown = createEffect(() => this.actions$.pipe(
@@ -41,20 +42,22 @@ export class CoursesEffects {
 
   public deleteCourse$: unknown = createEffect(() => this.actions$.pipe(
     ofType(CoursesActions.deleteCourse),
-    mergeMap(({ id }) => this.coursesService.removeItem(id)
-      .pipe(
-        map(() => ({ type: CoursesActions.deleteCourseSuccess })),
-        catchError(() => EMPTY)
-      ))
+    mergeMap(({ id }) =>
+      this.coursesService.removeItem(id)
+        .pipe(
+          map(() => ({ type: CoursesActions.deleteCourseSuccess })),
+          catchError(() => EMPTY)
+        ))
   ));
 
   public createCourse$: unknown = createEffect(() => this.actions$.pipe(
     ofType(CoursesActions.createCourse),
-    mergeMap(({ course }) => this.coursesService.createItem(course)
-      .pipe(
-        map((newCourse: Course) => ({ type: CoursesActions.createCourseSuccess, payload: newCourse })),
-        catchError(() => EMPTY)
-      ))
+    mergeMap(({ course }) =>
+      this.coursesService.createItem(course)
+        .pipe(
+          map((newCourse: Course) => ({ type: CoursesActions.createCourseSuccess, payload: newCourse })),
+          catchError(() => EMPTY)
+        ))
   ));
 
   constructor(

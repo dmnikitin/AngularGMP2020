@@ -6,7 +6,7 @@ import { UserState, initialUserState } from './../state/user.state';
 const reducer: ActionReducer<UserState, Action> = createReducer<UserState>(
   initialUserState,
   on(getUserInfoSuccess, (state, { payload }) => ({ user: payload, isAuthenticated: true })),
-  on(loginSuccess, () => initialUserState),
+  on(loginSuccess, (state) => ({...state})),
   on(logoutSuccess, () => ({ user: null, isAuthenticated: false }))
 );
 

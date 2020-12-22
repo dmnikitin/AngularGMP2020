@@ -13,9 +13,9 @@ const reducer: ActionReducer<CoursesState, Action> = createReducer<CoursesState>
   initialCoursesState,
   on(getCoursesSuccess, (state, { payload }) => ({...state, courses: payload })),
   on(getCourseByIdSuccess, (state, { payload }) =>  ({...state, selectedCourse: payload })),
-  on(updateCourseSuccess, () => initialCoursesState),
-  on(deleteCourseSuccess, () => initialCoursesState),
-  on(createCourseSuccess, () => initialCoursesState)
+  on(updateCourseSuccess, (state) => ({...state})),
+  on(deleteCourseSuccess, (state) => ({...state})),
+  on(createCourseSuccess, (state) => ({...state}))
 );
 
 type CoursesReducer = (state: CoursesState, action: Action) => CoursesState;

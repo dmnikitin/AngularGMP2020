@@ -19,9 +19,9 @@ export class AuthService {
   }
 
   private getTokenFromLocalStorage(): void {
-    const accessToken: string = localStorage.getItem('accessToken');
-    if (accessToken) {
-      this.token = accessToken;
+    const token: string = localStorage.getItem('accessToken');
+    if (token) {
+      this.token = token;
     }
   }
 
