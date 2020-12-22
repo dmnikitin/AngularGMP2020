@@ -1,6 +1,6 @@
 export interface IUser {
   id: number;
-  token: string;
+  fakeToken: string;
   name: IUserName;
   login: string;
   password: string;
@@ -11,13 +11,18 @@ interface IUserName {
   lastName: string;
 }
 
+export interface ILogin {
+  login: string;
+  password: string;
+}
+
 export type Token = { token: string };
 
 export class User implements IUser {
   constructor(
     public id: number,
     public name: IUserName,
-    public token: string,
+    public fakeToken: string,
     public login: string,
     public password: string
   ) {}

@@ -17,7 +17,7 @@ export class ApiCallInterceptor implements HttpInterceptor {
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if(request.headers.get('token') !== 'no-token') {
-      const authToken: string = this.authService.getToken();
+      const authToken: string = this.authService.token;
       request = request.clone({
         headers: new HttpHeaders({Authorization: authToken})
       });

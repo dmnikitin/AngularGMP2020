@@ -5,51 +5,54 @@ import { EMPTY } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { CoursesService } from 'src/app/core/services/courses.service';
 import { CoursesActions } from '../actions/courses.actions';
+import { Course } from 'src/app/shared/models/course';
 
 @Injectable()
 export class CoursesEffects {
 
-  public getCourses$ = createEffect(() => this.actions$.pipe(
-    ofType(CoursesActions.getCoursesSuccess),
-    mergeMap(() => this.coursesService.getCourses()
-      .pipe(
-        map(courses => ({ type: CoursesActions.getCoursesSuccess, payload: courses })),
-        catchError(() => EMPTY)
-      ))
+  public getCourses$: unknown = createEffect(() => this.actions$.pipe(
+    ofType(CoursesActions.getCourses),
+    mergeMap(({ start, count, sort, textFragment }) =>
+      this.coursesService.getList(start, count, sort, textFragment)
+        .pipe(
+          map((courses: Course[]) => ({ type: CoursesActions.getCoursesSuccess, payload: courses })),
+          catchError(() => EMPTY)
+        ))
   ));
 
-  public getCourseById$ = createEffect(() => this.actions$.pipe(
+  public getCourseById$: unknown = createEffect(() => this.actions$.pipe(
     ofType(CoursesActions.getCourseById),
-    mergeMap(() => this.coursesService.getItemById()
+    mergeMap(({ id }) => this.coursesService.getItemById(id)
       .pipe(
-        map(course => ({ type: CoursesActions.getCourseByIdSuccess })),
+        map(course => ({ type: CoursesActions.getCourseByIdSuccess, payload: course })),
         catchError(() => EMPTY)
       ))
   ));
 
-  public updateCourse$ = createEffect(() => this.actions$.pipe(
+  public updateCourse$: unknown = createEffect(() => this.actions$.pipe(
     ofType(CoursesActions.updateCourse),
-    mergeMap(() => this.coursesService.updateItem()
-      .pipe(
-        map(course => ({ type: CoursesActions.updateCourseSuccess })),
-        catchError(() => EMPTY)
-      ))
+    mergeMap(({ id, course }) =>
+      this.coursesService.updateItem(id, course)
+        .pipe(
+          map((updatedCourse) => ({ type: CoursesActions.updateCourseSuccess, payload: updatedCourse })),
+          catchError(() => EMPTY)
+        ))
   ));
 
-  public deleteCourse$ = createEffect(() => this.actions$.pipe(
+  public deleteCourse$: unknown = createEffect(() => this.actions$.pipe(
     ofType(CoursesActions.deleteCourse),
-    mergeMap(() => this.coursesService.removeItem()
+    mergeMap(({ id }) => this.coursesService.removeItem(id)
       .pipe(
-        map(course => ({ type: CoursesActions.deleteCourseSuccess })),
+        map(() => ({ type: CoursesActions.deleteCourseSuccess })),
         catchError(() => EMPTY)
       ))
   ));
 
-  public createCourse$ = createEffect(() => this.actions$.pipe(
+  public createCourse$: unknown = createEffect(() => this.actions$.pipe(
     ofType(CoursesActions.createCourse),
-    mergeMap(() => this.coursesService.createItem()
+    mergeMap(({ course }) => this.coursesService.createItem(course)
       .pipe(
-        map(course => ({ type: CoursesActions.createCourseSuccess })),
+        map((newCourse: Course) => ({ type: CoursesActions.createCourseSuccess, payload: newCourse })),
         catchError(() => EMPTY)
       ))
   ));

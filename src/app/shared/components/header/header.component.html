@@ -3,17 +3,17 @@
     <app-logo></app-logo>
     <h4 class="heading">Video Course</h4>
   </div>
-  <div class="wrapper" *ngIf="(isAuthenticated | async)">
+  <div class="wrapper" *ngIf="(user$ | async).isAuthenticated">
     <section class="user-info">
       <span class="material-icons">person</span>
-      <span *ngIf="(user | async) as fetchedUser"> {{ fetchedUser?.login }} </span>
+      <span *ngIf="(user$ | async).user as fetchedUser"> {{ fetchedUser?.login }} </span>
     </section>
     <button type="button" class="logout" (click)="handleLogout()">
       <span class="material-icons">exit_to_app</span>
       Log out</button>
   </div>
 </div>
-<div class="breadcrumbs" *ngIf="(isAuthenticated | async)">
+<div class="breadcrumbs" *ngIf="(user$ | async).isAuthenticated">
   <a class="breadcrumbs-text" routerLink="/courses">Courses </a>
   <span class="breadcrumbs-text"> {{ breadcrumbs }}</span>
 </div>

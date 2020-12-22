@@ -1,6 +1,5 @@
 import { Action, ActionReducer, on } from '@ngrx/store';
 import { createReducer } from '@ngrx/store';
-import { AppState, initialAppState } from '../state/app.state';
 import {
   getCoursesSuccess,
   getCourseByIdSuccess,
@@ -8,15 +7,16 @@ import {
   deleteCourseSuccess,
   createCourseSuccess
 } from '../actions/courses.actions';
+import { CoursesState, initialCoursesState } from '../state/courses.state';
 
-const reducer: ActionReducer<AppState, Action> = createReducer<AppState>(
-  initialAppState,
-  on(getCoursesSuccess, (state, { payload }) => ({...state, payload })),
-  on(getCourseByIdSuccess, () => initialAppState),
-  on(updateCourseSuccess, () => initialAppState),
-  on(deleteCourseSuccess, () => initialAppState),
-  on(createCourseSuccess, () => initialAppState)
+const reducer: ActionReducer<CoursesState, Action> = createReducer<CoursesState>(
+  initialCoursesState,
+  on(getCoursesSuccess, (state, { payload }) => ({...state, courses: payload })),
+  on(getCourseByIdSuccess, (state, { payload }) =>  ({...state, selectedCourse: payload })),
+  on(updateCourseSuccess, () => initialCoursesState),
+  on(deleteCourseSuccess, () => initialCoursesState),
+  on(createCourseSuccess, () => initialCoursesState)
 );
 
-type CoursesReducer = (state: AppState, action: Action) => AppState;
+type CoursesReducer = (state: CoursesState, action: Action) => CoursesState;
 export const coursesReducer: CoursesReducer = (state, action) => reducer(state, action);

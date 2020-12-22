@@ -29,6 +29,7 @@ export class CoursesService {
   public updateItem(id: number, course: Course): Observable<Course> {
     return this.http.patch<Course>(`${coursesUrl}/${id}`, course);
   }
+
   public removeItem(id: number): Observable<Course> {
     return this.http.delete<Course>(`${coursesUrl}/${id}`);
   }
@@ -36,5 +37,4 @@ export class CoursesService {
   public createItem(item: Course): Observable<Course> {
     return this.http.post<Course>(coursesUrl, item);
   }
-
 }

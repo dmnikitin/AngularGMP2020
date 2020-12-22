@@ -1,25 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs/operators';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { login } from 'src/app/core/store/actions/user.actions';
+import { UserState } from 'src/app/core/store/state/user.state';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   public email: string;
   public password: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(private store: Store<{ user: UserState }>) { }
 
   public handleLogin(): void {
-    this.authService.login(this.email, this.password)
-      .pipe(take(1)).subscribe();
+    this.store.dispatch(login({ login: this.email, password: this.password }));
   }
-
-  public ngOnInit(): void {
-  }
-
 }

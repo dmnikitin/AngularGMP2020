@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
-import { User } from '../../models/user';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
+import { UserState } from 'src/app/core/store/state/user.state';
+import { logout } from 'src/app/core/store/actions/user.actions';
 
 @Component({
   selector: 'app-header',
@@ -13,22 +14,21 @@ import { Observable } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 
-  public isAuthenticated: Observable<boolean>;
-  public user: Observable<User>;
+  public user$: Observable<UserState>;
   public breadcrumbs: string;
 
   constructor(
-    private authService: AuthService,
+    private store: Store<{ user: UserState }>,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    this.user$ = store.pipe(select('user'));
+  }
 
   public handleLogout(): void {
-    this.authService.logout();
+    this.store.dispatch(logout());
   }
 
   public ngOnInit(): void {
-    this.isAuthenticated = this.authService.isAuthenticated;
-    this.user = this.authService.user;
     this.activatedRoute.data.pipe(take(1)).subscribe((params: {routeData: BreadcrumbsResolverData}) => {
       this.breadcrumbs = params.routeData ? params.routeData.breadcrumbs : '';
     });

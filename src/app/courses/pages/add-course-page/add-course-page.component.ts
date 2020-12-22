@@ -1,9 +1,11 @@
+import { createCourse, updateCourse } from './../../../core/store/actions/courses.actions';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { take } from 'rxjs/operators';
-import { CoursesService } from 'src/app/core/services/courses.service';
 import { Course } from 'src/app/shared/models/course';
 import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
+import { CoursesState } from 'src/app/core/store/state/courses.state';
 
 const defaultCourse: Course = {
   id: 0,
@@ -31,7 +33,7 @@ export class AddCoursePageComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService) { }
+    private store: Store<{ courses: CoursesState }>) { }
 
   public ngOnInit(): void {
     this.course = defaultCourse;
@@ -54,9 +56,9 @@ export class AddCoursePageComponent implements OnInit {
 
   public handleAddCourse(): void {
     if (this.pageTitle === 'New course') {
-      this.coursesService.createItem(this.course).pipe(take(1)).subscribe();
+      this.store.dispatch(createCourse({course: this.course}));
     } else {
-      this.coursesService.updateItem(this.course.id, this.course).pipe(take(1)).subscribe();
+      this.store.dispatch(updateCourse({id: this.course.id, course: this.course}));
     }
     this.router.navigate(['courses']);
   }
