@@ -11,6 +11,7 @@ import { DurationPipe } from './pipes/duration.pipe';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { InputDurationComponent } from './components/input-duration/input-duration.component';
 import { InputAuthorsComponent } from './components/input-authors/input-authors.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { InputAuthorsComponent } from './components/input-authors/input-authors.
   ],
   imports: [
     SharedModule,
-    CoursesRoutingModule
+    CoursesRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class CoursesModule { }

@@ -6,6 +6,7 @@ import { take } from 'rxjs/operators';
 import { Course } from 'src/app/shared/models/course';
 import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
 import { CoursesState } from 'src/app/core/store/state/courses.state';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 const defaultCourse: Course = {
   id: 0,
@@ -29,11 +30,14 @@ export class AddCoursePageComponent implements OnInit {
   public pageTitle: string;
   public authors: string;
   public course: Course;
+  public form: FormGroup;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private store: Store<{ courses: CoursesState }>) { }
+    private store: Store<{ courses: CoursesState }>,
+    private fb: FormBuilder
+  ) { }
 
   public ngOnInit(): void {
     this.course = defaultCourse;
@@ -48,6 +52,10 @@ export class AddCoursePageComponent implements OnInit {
         this.router.navigate(['404']);
       }
     });
+    this.form = this.fb.group({
+
+    });
+
   }
 
   public handleReturn(): void {
