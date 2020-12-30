@@ -43,7 +43,7 @@ export class DatePickerComponent implements Validator, ControlValueAccessor {
   }
 
   public validate(control: AbstractControl): {[key: string]: boolean} | null {
-    if (!(/\d{2}\/\d{2}\/\d{4}$/g).test(control.value)) {
+    if (!(/(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[012])\/\d{4}$/g).test(control.value)) {
       return { dateIsInvalid: true };
     }
     return null;
