@@ -1,6 +1,6 @@
 <div class="wrapper">
-  <mat-form-field>
-    <input matInput type="text" name="search" (keyup)="updateQuery($event.target.value)" placeholder="Type to search">
+  <mat-form-field [formGroup]="form">
+    <input matInput type="text" name="search" formControlName="search" (keyup)="updateQuery($event.target.value)" placeholder="Type to search">
     <mat-icon matPrefix>search</mat-icon>
   </mat-form-field>
 </div>

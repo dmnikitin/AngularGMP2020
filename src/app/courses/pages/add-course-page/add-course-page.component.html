@@ -1,22 +1,22 @@
 <app-header></app-header>
 <main class="main">
-  <div class="wrapper">
+  <form class="wrapper" (ngSubmit)="handleAddCourse()" [formGroup]="form">
     <h3> {{pageTitle}} </h3>
     <mat-form-field class="example-form-field">
       <mat-label>Title</mat-label>
-      <input matInput type="text" [(ngModel)]="course.name" required>
+      <input matInput type="text" formControlName="name">
     </mat-form-field>
     <mat-form-field class="example-form-field">
       <mat-label>Description</mat-label>
-      <textarea matInput [(ngModel)]="course.description" required></textarea>
+      <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
-    <app-input-duration [(duration)]="course.length"></app-input-duration>
-    <app-date-picker [(createdAt)]="course.date"></app-date-picker>
-    <app-input-authors [(authors)]="authors"></app-input-authors>
+    <app-input-duration [parent]="form" formControlName="length"></app-input-duration>
+    <app-date-picker [parent]="form" formControlName="date"></app-date-picker>
+    <app-input-authors [parent]="form" formControlName="authors"></app-input-authors>
     <div class="buttons">
       <button mat-button class="return" (click)="handleReturn()">Cancel</button>
-      <button mat-button cdkFocusInitial class="add-course" (click)="handleAddCourse()">Save</button>
+      <button mat-button cdkFocusInitial class="add-course" type="submit" [disabled]="form.invalid">Save</button>
     </div>
-  </div>
+  </form>
 </main>
 <app-footer></app-footer>

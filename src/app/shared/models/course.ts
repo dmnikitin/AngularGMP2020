@@ -8,8 +8,8 @@ export interface ICourse {
   authors: IAuthors;
 }
 
-interface IAuthors {
-  id: number;
+export interface IAuthors {
+  id: string;
   name: string;
 }
 

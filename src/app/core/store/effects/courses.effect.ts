@@ -6,6 +6,7 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 import { CoursesService } from 'src/app/core/services/courses.service';
 import { CoursesActions } from '../actions/courses.actions';
 import { Course } from 'src/app/shared/models/course';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class CoursesEffects {
@@ -26,7 +27,10 @@ export class CoursesEffects {
       this.coursesService.getItemById(id)
         .pipe(
           map(course => ({ type: CoursesActions.getCourseByIdSuccess, payload: course })),
-          catchError(() => EMPTY)
+          catchError(() => {
+            this.router.navigate(['404']);
+            return EMPTY;
+          })
         ))
   ));
 
@@ -62,6 +66,7 @@ export class CoursesEffects {
 
   constructor(
     private actions$: Actions,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private router: Router
   ) {}
 }
