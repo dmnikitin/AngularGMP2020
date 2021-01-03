@@ -1,12 +1,12 @@
 <div class="length-container" [formGroup]="parent">
   <label for="length" class="length-label">
-    Duration:
+    {{ 'EDIT_COURSE.DURATION' | translate }}:
     <span class="length-error" *ngIf="parent.controls.length.invalid">
-      Please provide <strong>numeric value</strong>
+      {{ 'EDIT_COURSE.DURATION_VALIDATION' | translate }}
     </span>
   </label>
   <div class="length-input" >
-    <input id="length" type="text" formControlName="length" placeholder="Time in minutes">
+    <input id="length" type="text" formControlName="length" [placeholder]="'EDIT_COURSE.DURATION_PLACEHOLDER' | translate ">
     <div class="length-modified" *ngIf="!parent.controls.length.invalid"> {{parent.controls.length.value | duration}} </div>
   </div>
 </div>

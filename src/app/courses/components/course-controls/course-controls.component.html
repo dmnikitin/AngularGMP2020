@@ -1,15 +1,15 @@
 <div class="wrapper">
   <mat-form-field [formGroup]="form">
-    <input matInput type="text" name="search" formControlName="search" (keyup)="updateQuery($event.target.value)" placeholder="Type to search">
+    <input matInput type="text" name="search" formControlName="search" (keyup)="updateQuery($event.target.value)" [placeholder]="'CONTROLS.SEARCH' | translate ">
     <mat-icon matPrefix>search</mat-icon>
   </mat-form-field>
 </div>
 <div class="aside-buttons">
   <button type="button" class="add-button" routerLink="/courses/new">
     <span class="material-icons">add</span>
-    Add course
+    {{ 'CONTROLS.ADD_COURSE' | translate }}
   </button>
   <button class="sorting-button" (click)="sortItems()">
-    <span>Sort courses by {{ sortingValue }}: </span>
+    <span>{{ 'CONTROLS.SORT_COURSES' | translate }} {{ sortingValue }}: </span>
   </button>
 </div>

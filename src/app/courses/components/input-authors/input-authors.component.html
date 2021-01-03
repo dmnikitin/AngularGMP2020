@@ -1,12 +1,12 @@
 <div [formGroup]="parent">
   <div class="authors-container"  >
     <label for="authors" class="authors-label">
-      Authors:
+      {{ 'EDIT_COURSE.AUTHORS' | translate }}:
       <span class="authors-error" *ngIf="parent.controls.authors.invalid">
-        Please select an author from the dropdown
+        {{ 'EDIT_COURSE.AUTHORS_VALIDATION' | translate }}
       </span>
     </label>
-    <input matInput type="text" class="input" formArrayName="authors" placeholder="Choose an author" (keydown)="onInput($event.target.value)">
+    <input matInput type="text" class="input" formArrayName="authors" [placeholder]="'EDIT_COURSE.AUTHORS_PLACEHOLDER' | translate" (keydown)="onInput($event.target.value)">
   </div>
   <div class="dropdown">
     <ul class="dropdown-list" *ngIf="displayedAuthors?.length && (isDropdownOpen | async)">

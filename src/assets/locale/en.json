@@ -1,0 +1,71 @@
+{
+  "HEADER": {
+    "TITLE": "Video Courses",
+    "LOGOUT": "Log out"
+  },
+  "FOOTER": {
+    "TITLE": "Copyright © Videocourses. All rights reserved"
+  },
+  "LOGIN": {
+    "TITLE": "Login",
+    "LOGIN": "Login",
+    "LOGIN_PLACEHOLDER": "Enter e-mail",
+    "PASSWORD": "Passsword",
+    "PASSWORD_PLACEHOLDER": "Enter password",
+    "PASSWORD_VALIDATION": "Please provide not less then 3 symbols",
+    "FORGOT_PASSWORD": "Forgot password?"
+  },
+  "BREADCRUMBS": {
+    "COURSES": "Courses",
+    "NEW_COURSE": "New course"
+  },
+  "CONTROLS": {
+    "SEARCH": "Type to search",
+    "ADD_COURSE": "Add course",
+    "SORT_COURSES": "Sort courses by",
+    "SORTING_VALUE_DATE": "date",
+    "SORTING_VALUE_LENGTH": "length",
+    "LOAD_MORE": "Load more",
+    "NO_COURSES": "No courses to display, please feel free to add new one."
+  },
+  "COURSE_ITEM": {
+    "EDIT": "Edit",
+    "DELETE": "Delete"
+  },
+  "EDIT_COURSE": {
+    "HEADER": "Edit course",
+    "TITLE": "Title",
+    "DESCRIPTION": "Description",
+    "DATE": "Date",
+    "DATE_VALIDATION": "Please provide value in dd/mm/yyyy format",
+    "DURATION": "Duration",
+    "DURATION_PLACEHOLDER": "Time in minutes",
+    "DURATION_VALIDATION": "Please provide numeric value",
+    "AUTHORS": "Authors",
+    "AUTHORS_PLACEHOLDER": "Choose an author",
+    "AUTHORS_VALIDATION": "Please select an author from the dropdown",
+    "SAVE": "Save",
+    "CANCEL": "Cancel"
+  },
+  "DELETE_COURSE": {
+    "CONFIRMATION": "Do you really want to delete this course?",
+    "RETURN": "Return",
+    "DELETE": "Delete"
+  },
+  "404": {
+    "TITLE": "The link you clicked may be broken or the page may have been removed",
+    "LINK": "Homepage",
+    "VISIT": "Please visit the"
+  }
+}
+
+
+
+
+
+
+
+
+
+
+

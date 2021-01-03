@@ -4,7 +4,9 @@ import { IEnvironment } from './environment-model';
 // The list of file replacements can be found in `angular.json`.
 
 export const environment: IEnvironment = {
-  production: false
+  production: false,
+  locales: ['en', 'ru'],
+  defaultLocale: 'en'
 };
 
 /*

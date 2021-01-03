@@ -21,11 +21,11 @@
   <div class="wrapper wrapper-icons">
     <button class="button" [routerLink]="[index]">
       <span class="material-icons">edit</span>
-      Edit
+      {{ 'COURSE_ITEM.EDIT' | translate }}
     </button>
     <button class="button delete" (click)="handleDelete(item.id)">
       <span class="material-icons">delete</span>
-      Delete
+      {{ 'COURSE_ITEM.DELETE' | translate }}
     </button>
   </div>
 </section>

@@ -9,6 +9,7 @@ import { createCourse, updateCourse } from 'src/app/core/store/actions/courses.a
 import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
 import { CoursesState } from 'src/app/core/store/state/courses.state';
 import { Course } from 'src/app/shared/models/course';
+import { TranslateService } from '@ngx-translate/core';
 
 const defaultCourse: Course = {
   id: 0,
@@ -39,12 +40,15 @@ export class AddCoursePageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private store: Store<{ courses: CoursesState }>,
     private fb: FormBuilder,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private translateService: TranslateService
   ) {}
 
   public ngOnInit(): void {
     this.course = defaultCourse;
     this.pageTitle = this.activatedRoute.snapshot.data.page as string;
+    console.log('1', this.translateService);
+    // this.translateService.instant('Key')
     if (this.pageTitle === 'New course') {
       this.initializeForm();
       return;

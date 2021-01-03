@@ -1,8 +1,8 @@
 <div class="date-container" [formGroup]="parent">
   <label for="date" class="date-label">
-    Date:
+    {{ 'EDIT_COURSE.DATE' | translate }}:
     <span class="date-error" *ngIf="parent.controls.date.invalid">
-      Please provide value in <strong>dd/mm/yyyy</strong> format
+      {{ 'EDIT_COURSE.DATE_VALIDATION' | translate }}
     </span>
   </label>
   <input id="date" class="date-input" type="text" formControlName="date" placeholder="dd/mm/yyyy">

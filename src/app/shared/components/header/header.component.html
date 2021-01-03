@@ -1,8 +1,9 @@
 <div class="header">
   <div class="wrapper">
     <app-logo></app-logo>
-    <h4 class="heading">Video Course</h4>
+    <h4 class="heading">{{ 'HEADER.TITLE' | translate  }}</h4>
   </div>
+  <app-language-dropdown></app-language-dropdown>
   <div class="wrapper" *ngIf="(user$ | async).isAuthenticated">
     <section class="user-info">
       <span class="material-icons">person</span>
@@ -10,10 +11,11 @@
     </section>
     <button type="button" class="logout" (click)="handleLogout()">
       <span class="material-icons">exit_to_app</span>
-      Log out</button>
+      {{ 'HEADER.LOGOUT' | translate  }}
+    </button>
   </div>
 </div>
 <div class="breadcrumbs" *ngIf="(user$ | async).isAuthenticated">
-  <a class="breadcrumbs-text" routerLink="/courses">Courses </a>
+  <a class="breadcrumbs-text" routerLink="/courses">{{ 'BREADCRUMBS.COURSES' | translate  }} </a>
   <span class="breadcrumbs-text"> {{ breadcrumbs }}</span>
 </div>

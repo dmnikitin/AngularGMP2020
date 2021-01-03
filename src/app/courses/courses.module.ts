@@ -33,6 +33,7 @@ import { AuthorComponent } from './components/author/author.component';
     SharedModule,
     CoursesRoutingModule,
     ReactiveFormsModule
+    // TranslateModule
   ],
   providers: [
     DatePipe

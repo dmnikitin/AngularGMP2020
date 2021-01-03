@@ -1,6 +1,6 @@
 import { userReducer } from './store/reducers/user.reducer';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiCallInterceptor } from './interceptors/api-call.interceptor';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { EffectsModule } from '@ngrx/effects';
@@ -10,6 +10,12 @@ import { CoursesEffects } from './store/effects/courses.effect';
 import { coursesReducer } from './store/reducers/courses.reducer';
 import { UserEffects } from './store/effects/user.effects';
 import { environment } from 'src/environments/environment';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
+  return new TranslateHttpLoader(http, './assets/locale/', '.json');
+}
 
 @NgModule({
   imports: [
@@ -17,6 +23,14 @@ import { environment } from 'src/environments/environment';
     StoreModule.forRoot({ courses: coursesReducer, user: userReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([CoursesEffects, UserEffects])
+    // TranslateModule.forRoot({
+    //   loader: {
+    //     provide: TranslateLoader,
+    //     useFactory: HttpLoaderFactory,
+    //     deps: [HttpClient]
+    //   },
+    //   useDefaultLang: false
+    // })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ApiCallInterceptor, multi: true },

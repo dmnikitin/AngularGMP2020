@@ -1,0 +1,60 @@
+{
+  "HEADER": {
+    "TITLE": "Видео курсы",
+    "LOGOUT": "Выйти"
+  },
+  "FOOTER": {
+    "TITLE": "© Videocourses. Все права соблюдены"
+  },
+  "LOGIN": {
+    "TITLE": "Войти",
+    "LOGIN": "Войти",
+    "LOGIN_PLACEHOLDER": "Введите логин",
+    "PASSWORD": "Пароль",
+    "PASSWORD_PLACEHOLDER": "Введите пароль",
+    "PASSWORD_VALIDATION": "Введите не менее 3-х символов",
+    "FORGOT_PASSWORD": "Забыли пароль?"
+  },
+  "BREADCRUMBS": {
+    "COURSES": "Курсы",
+    "NEW_COURSE": "Новый курс"
+  },
+  "CONTROLS": {
+    "SEARCH": "Поиск по курсам",
+    "ADD_COURSE": "Добавить курс",
+    "SORT_COURSES": "Сортировать курссы по",
+    "SORTING_VALUE_DATE": "дате",
+    "SORTING_VALUE_LENGTH": "длине",
+    "LOAD_MORE": "Загрузить больше",
+    "NO_COURSES": "Нет курсов для отображения. Создайте новый!"
+  },
+  "COURSE_ITEM": {
+    "EDIT": "Изменить",
+    "DELETE": "Удалить"
+  },
+  "EDIT_COURSE": {
+    "HEADER": "Редактор курса",
+    "TITLE": "Название",
+    "DESCRIPTION": "Описание",
+    "DATE": "Дата создания",
+    "DATE_VALIDATION": "Введите значение в дд/мм/гггг формате",
+    "DURATION": "Длина курса",
+    "DURATION_PLACEHOLDER": "Введите время в минутах",
+    "DURATION_VALIDATION": "Пожалуйста, введите числовое значение",
+    "AUTHORS": "Авторы",
+    "AUTHORS_PLACEHOLDER": "Выберите автора",
+    "AUTHORS_VALIDATION": "Пожалуйста, выберите автора из выпадающего списка",
+    "SAVE": "Сохранить",
+    "CANCEL": "Отменить"
+  },
+  "DELETE_COURSE": {
+    "CONFIRMATION": "Вы действительно хотите удалить данный курс?",
+    "RETURN": "Вернуться",
+    "DELETE": "Удалить"
+  },
+  "404": {
+    "TITLE": "Сожалеем, но ссылка, по которой вы перешли, вероятно, сломана, или такой страницы не существует",
+    "LINK": "Домашнюю страницу",
+    "VISIT": "Пожалуйста, посетите"
+  }
+}

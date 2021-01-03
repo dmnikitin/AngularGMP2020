@@ -7,12 +7,12 @@
       <div class="courses-wrapper">
         <app-course-item *ngFor="let item of fetchedCourses" [item]="item" [index]="item.id" (deletedItemEvent)="onItemDelete($event)"></app-course-item>
       </div>
-      <button type="button" class="button load-more" (click)="loadMore()">Load more</button>
+      <button type="button" class="button load-more" (click)="loadMore()">{{ 'CONTROLS.LOAD_MORE' | translate }}</button>
      </ng-container>
   </ng-container>
   <ng-template #noCourses>
     <div class="no-courses">
-      <span>No courses to display, please feel free to add new one.</span>
+      <span>{{ 'CONTROLS.NO_COURSES' | translate }}</span>
     </div>
   </ng-template>
 </main>

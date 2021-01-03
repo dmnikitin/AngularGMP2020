@@ -1,0 +1,6 @@
+<div>
+  <span class="flag" (click)="isDropdownOpen=!isDropdownOpen"><img [src]="selected.path" [alt]="selected.name"></span>
+  <div class="dropdown" *ngIf="isDropdownOpen">
+    <span class="flag" *ngFor="let lang of languages"><img [src]="lang.path" [alt]="lang.name" (click)="setLanguage(lang.name)"></span>
+  </div>
+</div>

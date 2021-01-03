@@ -1,3 +1,5 @@
+import { ILanguage } from 'src/app/shared/models/language';
+
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 export enum Colors {
   green = 'rgb(34, 139, 34)',
@@ -12,3 +14,8 @@ export const authUrl: string = 'http://localhost:3004/auth';
 export const authorsUrl: string = 'http://localhost:3004/authors';
 
 export const defaultCoursesCount: number = 9;
+
+export const languages: ILanguage[] = [
+  { id: 1, name: 'en', path: 'assets/images/usa.png' },
+  { id: 2, name: 'ru', path: 'assets/images/ru.png' }
+];

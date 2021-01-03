@@ -14,12 +14,24 @@ import { HeaderComponent } from './components/header/header.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoadingBlockComponent } from './components/loading-block/loading-block.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { LanguageDropdownComponent } from './components/language-dropdown/language-dropdown.component';
+
+import { TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/home/', '.json');
+}
+
 @NgModule({
   declarations: [
     HeaderComponent,
     LogoComponent,
     FooterComponent,
-    LoadingBlockComponent
+    LoadingBlockComponent,
+    LanguageDropdownComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +45,16 @@ import { LoadingBlockComponent } from './components/loading-block/loading-block.
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    TranslateModule
+    // TranslateModule.forChild({
+    //   loader: {
+    //     provide: TranslateLoader,
+    //     useFactory: (createTranslateLoader),
+    //     deps: [HttpClient]
+    //   }
+    // })
+
   ],
   exports:[
     FormsModule,
@@ -50,7 +71,8 @@ import { LoadingBlockComponent } from './components/loading-block/loading-block.
     HeaderComponent,
     LogoComponent,
     FooterComponent,
-    LoadingBlockComponent
+    LoadingBlockComponent,
+    TranslateModule
   ]
 })
 export class SharedModule { }
