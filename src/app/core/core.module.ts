@@ -13,7 +13,8 @@ import { environment } from 'src/environments/environment';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+export function httpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, './assets/locale/', '.json');
 }
 
@@ -22,15 +23,15 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
     HttpClientModule,
     StoreModule.forRoot({ courses: coursesReducer, user: userReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([CoursesEffects, UserEffects])
-    // TranslateModule.forRoot({
-    //   loader: {
-    //     provide: TranslateLoader,
-    //     useFactory: HttpLoaderFactory,
-    //     deps: [HttpClient]
-    //   },
-    //   useDefaultLang: false
-    // })
+    EffectsModule.forRoot([CoursesEffects, UserEffects]),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpLoaderFactory,
+        deps: [HttpClient]
+      },
+      useDefaultLang: false
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ApiCallInterceptor, multi: true },

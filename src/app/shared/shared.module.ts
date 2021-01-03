@@ -17,14 +17,6 @@ import { LoadingBlockComponent } from './components/loading-block/loading-block.
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageDropdownComponent } from './components/language-dropdown/language-dropdown.component';
 
-import { TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/home/', '.json');
-}
-
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -47,14 +39,6 @@ export function createTranslateLoader(http: HttpClient) {
     MatNativeDateModule,
     MatProgressSpinnerModule,
     TranslateModule
-    // TranslateModule.forChild({
-    //   loader: {
-    //     provide: TranslateLoader,
-    //     useFactory: (createTranslateLoader),
-    //     deps: [HttpClient]
-    //   }
-    // })
-
   ],
   exports:[
     FormsModule,

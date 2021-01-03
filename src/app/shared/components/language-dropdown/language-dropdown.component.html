@@ -1,6 +1,6 @@
-<div>
+<div *ngIf="(selected$ | async) as selected">
   <span class="flag" (click)="isDropdownOpen=!isDropdownOpen"><img [src]="selected.path" [alt]="selected.name"></span>
   <div class="dropdown" *ngIf="isDropdownOpen">
-    <span class="flag" *ngFor="let lang of languages"><img [src]="lang.path" [alt]="lang.name" (click)="setLanguage(lang.name)"></span>
+    <span class="flag" *ngFor="let lang of displayedLanguages"><img [src]="lang.path" [alt]="lang.name" (click)="setLanguage(lang)"></span>
   </div>
 </div>

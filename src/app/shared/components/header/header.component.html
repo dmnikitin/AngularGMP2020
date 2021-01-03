@@ -3,16 +3,18 @@
     <app-logo></app-logo>
     <h4 class="heading">{{ 'HEADER.TITLE' | translate  }}</h4>
   </div>
-  <app-language-dropdown></app-language-dropdown>
-  <div class="wrapper" *ngIf="(user$ | async).isAuthenticated">
-    <section class="user-info">
-      <span class="material-icons">person</span>
-      <span *ngIf="(user$ | async).user as fetchedUser"> {{ fetchedUser?.login }} </span>
-    </section>
-    <button type="button" class="logout" (click)="handleLogout()">
-      <span class="material-icons">exit_to_app</span>
-      {{ 'HEADER.LOGOUT' | translate  }}
-    </button>
+  <div class="wrapper">
+    <app-language-dropdown></app-language-dropdown>
+    <div class="wrapper" *ngIf="(user$ | async).isAuthenticated">
+      <section class="user-info">
+        <span class="material-icons">person</span>
+        <span *ngIf="(user$ | async).user as fetchedUser"> {{ fetchedUser?.login }} </span>
+      </section>
+      <button type="button" class="logout" (click)="handleLogout()">
+        <span class="material-icons">exit_to_app</span>
+        {{ 'HEADER.LOGOUT' | translate  }}
+      </button>
+    </div>
   </div>
 </div>
 <div class="breadcrumbs" *ngIf="(user$ | async).isAuthenticated">

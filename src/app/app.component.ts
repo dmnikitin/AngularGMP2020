@@ -1,5 +1,6 @@
 import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -8,18 +9,11 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent implements OnInit, AfterContentInit {
 
-  constructor(private translateService: TranslateService) {
-
-    translateService.addLangs(['en', 'ru']);
-    translateService.setDefaultLang('en');
-    translateService.use('en');
-  }
+  constructor(private translateService: TranslateService) {}
 
   public ngOnInit(): void {
-    console.log('init');
-    // this.translateService.setDefaultLang(lang);
-    //   this.translateService.use(lang);
-
+    this.translateService.setDefaultLang(environment.defaultLocale);
+    this.translateService.use(environment.defaultLocale);
   }
 
   public ngAfterContentInit(): void {

@@ -47,15 +47,22 @@ export class AddCoursePageComponent implements OnInit {
   public ngOnInit(): void {
     this.course = defaultCourse;
     this.pageTitle = this.activatedRoute.snapshot.data.page as string;
-    console.log('1', this.translateService);
     // this.translateService.instant('Key')
     if (this.pageTitle === 'New course') {
+      this.translateService.get('BREADCRUMBS.NEW_COURSE').subscribe((res: string) => {
+        console.log(res); this.pageTitle = res
+        ;
+      } );
       this.initializeForm();
       return;
     }
     this.activatedRoute.data.pipe(take(1)).subscribe((params: {routeData: BreadcrumbsResolverData}) => {
       if (params.routeData.course) {
         this.course = { ...params.routeData.course};
+        this.translateService.get('EDIT_COURSE.HEADER').subscribe((res: string) => {
+          console.log(res); this.pageTitle = res
+          ;
+        } );
         this.initializeForm();
       } else {
         this.router.navigate(['404']);
