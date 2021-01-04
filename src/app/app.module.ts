@@ -4,6 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
+import { languagesToken } from './core/services/language.service';
+import { dataLanguages } from 'src/assets/variables';
 @NgModule({
   declarations: [
     AppComponent
@@ -14,6 +16,10 @@ import { AuthModule } from './auth/auth.module';
     CoreModule,
     AuthModule
   ],
+  providers: [{
+    provide: languagesToken,
+    useValue: [...dataLanguages]
+  }],
   bootstrap: [
     AppComponent
   ]

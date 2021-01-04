@@ -16,7 +16,7 @@ export const authorsUrl: string = 'http://localhost:3004/authors';
 
 export const defaultCoursesCount: number = 9;
 
-export const languages: ILanguage[] = [
+export const dataLanguages: ILanguage[] = [
   { id: 1, name: 'en', path: 'assets/images/usa.png' },
   { id: 2, name: 'ru', path: 'assets/images/ru.png' }
 ];

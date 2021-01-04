@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { LanguageService } from 'src/app/core/services/language.service';
 import { ILanguage } from 'src/app/shared/models/language';
-import { languages } from 'src/assets/variables';
+import { dataLanguages } from 'src/assets/variables';
 
 @Component({
   selector: 'app-language-dropdown',
@@ -17,16 +17,18 @@ export class LanguageDropdownComponent implements OnInit {
   public displayedLanguages: ILanguage[];
   public isDropdownOpen: boolean = false;
 
-  constructor(private translate: TranslateService, private languageService: LanguageService) { }
+  constructor(private translate: TranslateService, private languageService: LanguageService) {
+  }
 
   public ngOnInit(): void {
-    this.languages = languages;
+    this.languages = [...dataLanguages];
     this.displayedLanguages = this.filterLanguages(this.languageService.currentLanguage.getValue().id || 1);
     this.selected$ = this.languageService.currentLanguage;
   }
 
   public setLanguage(language: ILanguage): void {
     this.translate.use(language.name);
+    localStorage.setItem('language', language.name);
     const selectedLang: ILanguage = this.languages.find(lang => lang.id === language.id);
     this.displayedLanguages = this.filterLanguages(language.id);
     this.languageService.currentLanguage.next(selectedLang);
