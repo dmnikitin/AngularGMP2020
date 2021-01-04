@@ -10,6 +10,9 @@
     {{ 'CONTROLS.ADD_COURSE' | translate }}
   </button>
   <button class="sorting-button" (click)="sortItems()">
-    <span>{{ 'CONTROLS.SORT_COURSES' | translate }} {{ sortingValue }}: </span>
+    <span>
+      {{ 'CONTROLS.SORT_COURSES' | translate }}
+      {{ (sortingValue === 'date' ? 'CONTROLS.SORTING_VALUE_DATE' : 'CONTROLS.SORTING_VALUE_LENGTH') | translate }}
+    </span>
   </button>
 </div>

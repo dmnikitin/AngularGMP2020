@@ -22,7 +22,7 @@
   "CONTROLS": {
     "SEARCH": "Поиск по курсам",
     "ADD_COURSE": "Добавить курс",
-    "SORT_COURSES": "Сортировать курссы по",
+    "SORT_COURSES": "Сортировать курсы по",
     "SORTING_VALUE_DATE": "дате",
     "SORTING_VALUE_LENGTH": "длине",
     "LOAD_MORE": "Загрузить больше",

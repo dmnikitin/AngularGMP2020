@@ -21,7 +21,7 @@ export class LanguageDropdownComponent implements OnInit {
 
   public ngOnInit(): void {
     this.languages = languages;
-    this.displayedLanguages = this.filterLanguages(1);
+    this.displayedLanguages = this.filterLanguages(this.languageService.currentLanguage.getValue().id || 1);
     this.selected$ = this.languageService.currentLanguage;
   }
 

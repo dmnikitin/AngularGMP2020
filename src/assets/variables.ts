@@ -1,3 +1,4 @@
+import { Course } from 'src/app/shared/models/course';
 import { ILanguage } from 'src/app/shared/models/language';
 
 /* eslint-disable @typescript-eslint/no-inferrable-types */
@@ -19,3 +20,16 @@ export const languages: ILanguage[] = [
   { id: 1, name: 'en', path: 'assets/images/usa.png' },
   { id: 2, name: 'ru', path: 'assets/images/ru.png' }
 ];
+
+export const defaultCourse: Course = {
+  id: 0,
+  name: '',
+  length: 0,
+  date: '',
+  isTopRated: false,
+  description: '',
+  authors: {
+    id: '0',
+    name: ''
+  }
+};

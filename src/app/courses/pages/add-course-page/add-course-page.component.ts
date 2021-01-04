@@ -9,20 +9,8 @@ import { createCourse, updateCourse } from 'src/app/core/store/actions/courses.a
 import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
 import { CoursesState } from 'src/app/core/store/state/courses.state';
 import { Course } from 'src/app/shared/models/course';
-import { TranslateService } from '@ngx-translate/core';
+import { defaultCourse } from 'src/assets/variables';
 
-const defaultCourse: Course = {
-  id: 0,
-  name: '',
-  length: 0,
-  date: '',
-  isTopRated: false,
-  description: '',
-  authors: {
-    id: '0',
-    name: ''
-  }
-};
 @Component({
   selector: 'app-add-course-page',
   templateUrl: './add-course-page.component.html',
@@ -40,29 +28,19 @@ export class AddCoursePageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private store: Store<{ courses: CoursesState }>,
     private fb: FormBuilder,
-    private datePipe: DatePipe,
-    private translateService: TranslateService
+    private datePipe: DatePipe
   ) {}
 
   public ngOnInit(): void {
     this.course = defaultCourse;
     this.pageTitle = this.activatedRoute.snapshot.data.page as string;
-    // this.translateService.instant('Key')
     if (this.pageTitle === 'New course') {
-      this.translateService.get('BREADCRUMBS.NEW_COURSE').subscribe((res: string) => {
-        console.log(res); this.pageTitle = res
-        ;
-      } );
       this.initializeForm();
       return;
     }
     this.activatedRoute.data.pipe(take(1)).subscribe((params: {routeData: BreadcrumbsResolverData}) => {
       if (params.routeData.course) {
         this.course = { ...params.routeData.course};
-        this.translateService.get('EDIT_COURSE.HEADER').subscribe((res: string) => {
-          console.log(res); this.pageTitle = res
-          ;
-        } );
         this.initializeForm();
       } else {
         this.router.navigate(['404']);
