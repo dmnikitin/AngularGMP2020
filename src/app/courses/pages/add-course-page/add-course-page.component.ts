@@ -22,6 +22,7 @@ const defaultCourse: Course = {
     name: ''
   }
 };
+
 @Component({
   selector: 'app-add-course-page',
   templateUrl: './add-course-page.component.html',
@@ -43,31 +44,27 @@ export class AddCoursePageComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.course = defaultCourse;
+    this.initializeForm();
     this.pageTitle = this.activatedRoute.snapshot.data.page as string;
     if (this.pageTitle === 'New course') {
-      this.initializeForm();
       return;
     }
-    this.activatedRoute.data.pipe(take(1)).subscribe((params: {routeData: BreadcrumbsResolverData}) => {
-      if (params.routeData.course) {
-        this.course = { ...params.routeData.course};
-        this.initializeForm();
-      } else {
-        this.router.navigate(['404']);
-      }
-    });
-  }
-
-  public initializeForm(): void {
-    const { name, description, length, date, authors } = this.course;
-    this.form = this.fb.group({
-      name: new FormControl(name, [Validators.required, Validators.maxLength(50)]),
-      description: new FormControl(description, [Validators.required, Validators.maxLength(500)]),
-      length: new FormControl(length, [Validators.required]),
-      date: new FormControl(this.formatDate(date), [Validators.required]),
-      authors: new FormControl(authors, Validators.required)
-    });
+    this.activatedRoute.data.pipe(take(1))
+      .subscribe((params: {routeData: BreadcrumbsResolverData}) => {
+        if (params.routeData.course) {
+          this.course = { ...params.routeData.course};
+          const formValue: Omit<Course, 'isTopRated' | 'id'> = {
+            name: this.course.name,
+            description: this.course.description,
+            length: this.course.length,
+            date: this.formatDate(this.course.date),
+            authors: this.course.authors
+          };
+          this.form.setValue(formValue);
+        } else {
+          this.router.navigate(['404']);
+        }
+      });
   }
 
   public handleReturn(): void {
@@ -86,6 +83,18 @@ export class AddCoursePageComponent implements OnInit {
       this.store.dispatch(updateCourse({ id: this.course.id, course }));
     }
     this.router.navigate(['courses']);
+  }
+
+  private initializeForm(): void {
+    this.course = defaultCourse;
+    const { name, description, length, date, authors } = this.course;
+    this.form = this.fb.group({
+      name: new FormControl(name, [Validators.required, Validators.maxLength(50)]),
+      description: new FormControl(description, [Validators.required, Validators.maxLength(500)]),
+      length: new FormControl(length, [Validators.required]),
+      date: new FormControl(this.formatDate(date), [Validators.required]),
+      authors: new FormControl(authors, Validators.required)
+    });
   }
 
   private formatDate(date: string): string {

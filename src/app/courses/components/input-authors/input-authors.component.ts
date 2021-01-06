@@ -1,4 +1,8 @@
-import { Component, Input, OnInit, forwardRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  forwardRef
+} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -30,7 +34,7 @@ import { IAuthors } from 'src/app/shared/models/course';
     }
   ]
 })
-export class InputAuthorsComponent implements Validator, ControlValueAccessor, OnInit {
+export class InputAuthorsComponent implements Validator, ControlValueAccessor {
 
   @Input() public parent: FormGroup;
   public isDropdownOpen: BehaviorSubject<boolean> = this.authorsService.dropdownOpen;
@@ -41,7 +45,15 @@ export class InputAuthorsComponent implements Validator, ControlValueAccessor, O
 
   public onChange: (value: IAuthors[]) => void;
   public onTouched: (value: IAuthors[]) => void;
-  public writeValue(): void {}
+
+  public writeValue(): void {
+    const value: IAuthors[] = this.parent.get('authors').value as IAuthors[];
+    if (value.length) {
+      value.forEach(author => {
+        this.checkedAuthors.push(this.convertFetchedAuthors(author));
+      });
+    }
+  }
 
   public registerOnChange(fn: (val: IAuthors[]) => unknown): void {
     this.onChange = fn;
@@ -70,15 +82,6 @@ export class InputAuthorsComponent implements Validator, ControlValueAccessor, O
         }
       });
     });
-  }
-
-  public ngOnInit(): void {
-    const value: IAuthors[] = this.parent.get('authors').value as IAuthors[];
-    if (value.length) {
-      value.forEach(author => {
-        this.checkedAuthors.push(this.convertFetchedAuthors(author));
-      });
-    }
   }
 
   private convertFetchedAuthors(author: {id: string; name: string; lastName?: string}): IAuthors {
