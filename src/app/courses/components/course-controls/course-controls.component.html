@@ -1,9 +1,8 @@
 <div class="wrapper">
   <mat-form-field>
-    <input matInput type="text" name="search" [(ngModel)]="searchQuery" placeholder="Type to search">
+    <input matInput type="text" name="search" (keyup)="updateQuery($event.target.value)" placeholder="Type to search">
     <mat-icon matPrefix>search</mat-icon>
   </mat-form-field>
-  <button mat-button type="submit" class="search-button" (click)="searchItems()">Search</button>
 </div>
 <div class="aside-buttons">
   <button type="button" class="add-button" routerLink="/courses/new">

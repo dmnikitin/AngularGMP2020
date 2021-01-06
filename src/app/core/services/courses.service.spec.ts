@@ -3,7 +3,6 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { mockCourses } from 'src/assets/mock-data';
-import { coursesUrl } from 'src/assets/variables';
 import { Course } from 'src/app/shared/models/course';
 import { CoursesService } from './courses.service';
 
@@ -74,6 +73,16 @@ describe('CoursesService', () => {
     service.createItem(mockCourse).subscribe((course) => {
       expect(course.id).toBe(5);
     });
+  });
+
+  it('should send request with correct params', () => {
+    service.getList(1, 2, 'sortString', 'searchString').subscribe();
+    // eslint-disable-next-line @typescript-eslint/tslint/config
+    const url = 'http://localhost:3004/courses?start=1&count=2&sort=sortString&textFragment=searchString';
+    const req: TestRequest = httpTestingController.expectOne(url);
+
+    expect(req.request.method).toBe('GET');
+    expect(req.request.params.get('start')).toEqual('1');
   });
 
 });

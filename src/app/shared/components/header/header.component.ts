@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 
-  public isAuthenticated: boolean;
+  public isAuthenticated: Observable<boolean>;
   public user: Observable<User>;
   public breadcrumbs: string;
 
@@ -27,8 +27,8 @@ export class HeaderComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.isAuthenticated = this.authService.isAuthenticated();
-    this.user = this.authService.getUserInfo();
+    this.isAuthenticated = this.authService.isAuthenticated;
+    this.user = this.authService.user;
     this.activatedRoute.data.pipe(take(1)).subscribe((params: {routeData: BreadcrumbsResolverData}) => {
       this.breadcrumbs = params.routeData ? params.routeData.breadcrumbs : '';
     });

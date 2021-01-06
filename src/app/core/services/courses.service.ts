@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 import { Course } from 'src/app/shared/models/course';
-import { Observable } from 'rxjs';
 import { coursesUrl } from 'src/assets/variables';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
+
+  public searchQuery: Subject<string> = new Subject();
 
   constructor(private http: HttpClient) { }
 
@@ -34,4 +36,5 @@ export class CoursesService {
   public createItem(item: Course): Observable<Course> {
     return this.http.post<Course>(coursesUrl, item);
   }
+
 }
