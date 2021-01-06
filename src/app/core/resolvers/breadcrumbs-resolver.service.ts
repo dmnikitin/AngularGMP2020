@@ -1,23 +1,28 @@
-import { CoursesService } from './../services/courses.service';
 import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { Course } from 'src/app/shared/models/course';
-import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
+import { Store } from '@ngrx/store';
 import { catchError, switchMap, take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Course } from 'src/app/shared/models/course';
+import { BreadcrumbsResolverData } from 'src/app/shared/models/breadcrumbs';
+import { CoursesState } from './../store/state/courses.state';
+import { CoursesActions, getCourseById } from '../store/actions/courses.actions';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Injectable({ providedIn: 'root' })
 export class BreadcrumbsResolverService implements Resolve<BreadcrumbsResolverData | HttpErrorResponse>{
 
-  constructor(private coursesService: CoursesService) { }
+  constructor(private store: Store<{ courses: CoursesState }>, private action$: Actions) { }
 
   public resolve(route: ActivatedRouteSnapshot): Observable<BreadcrumbsResolverData | HttpErrorResponse> {
-    const {id} = route.params;
+    const {id} = route.params as {id: number};
     if (id) {
-      return this.coursesService.getItemById(id).pipe(
+      this.store.dispatch(getCourseById({id}));
+      return this.action$.pipe(
+        ofType(CoursesActions.getCourseByIdSuccess),
         take(1),
-        switchMap((course: Course) => of({breadcrumbs: `/ ${course.name}`, course})),
+        switchMap(({payload}: {payload: Course}) => of({breadcrumbs: `/ ${payload.name}`, course: payload})),
         catchError((err: HttpErrorResponse) => of(err))
       );
     }

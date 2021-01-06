@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { CoursesService } from 'src/app/core/services/courses.service';
 
 @Component({
   selector: 'app-course-controls',
@@ -7,18 +8,15 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class CourseControlsComponent implements OnInit {
 
-  @Output() public searchEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() public sortEvent: EventEmitter<string> = new EventEmitter<string>();
 
-  public searchQuery: string;
   public sortingValue: string;
-
   public route: string = '/courses/new';
 
-  constructor() { }
+  constructor(private coursesService: CoursesService) { }
 
-  public searchItems(): void {
-    this.searchEvent.emit(this.searchQuery);
+  public updateQuery(value: string): void {
+    this.coursesService.searchQuery.next(value);
   }
 
   public sortItems(): void {
@@ -27,7 +25,6 @@ export class CourseControlsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.searchQuery = '';
     this.sortingValue = 'date';
   }
 }

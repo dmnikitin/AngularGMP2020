@@ -1,59 +1,71 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, Subscription } from 'rxjs';
 import { DeleteModalComponent } from '../../components/delete-modal/delete-modal.component';
 import { CoursesService } from 'src/app/core/services/courses.service';
-import { Course } from 'src/app/shared/models/course';
 import { defaultCoursesCount } from 'src/assets/variables';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { debounceTime, switchMap, take, tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { CoursesState } from 'src/app/core/store/state/courses.state';
+import { deleteCourse, getCourses } from './../../../core/store/actions/courses.actions';
 
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
   styleUrls: ['./courses-page.component.scss']
 })
-export class CoursesPageComponent implements OnInit {
+export class CoursesPageComponent implements OnInit, OnDestroy {
 
-  public courses: Observable<Course[]>;
+  private searchSubscription: Subscription;
   private page: number;
 
+  public courses$: Observable<CoursesState>;
+
   constructor(
+    private store: Store<{ courses: CoursesState }>,
     private coursesService: CoursesService,
     private dialog: MatDialog
-  ) { }
+  ) {
+    this.courses$ = store.pipe(select('courses'));
+  }
 
-  public onItemDelete(itemId: number): void {
+  public onItemDelete(id: number): void {
     const dialogRef: MatDialogRef<DeleteModalComponent> = this.dialog.open(DeleteModalComponent);
     dialogRef.afterClosed()
       .pipe(
         take(1),
         switchMap(result => {
           if (result) {
-            return this.coursesService.removeItem(itemId).pipe(
-              tap(() => {
-                this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
-              })
-            );
+            this.store.dispatch(deleteCourse({ id }));
+            this.store.dispatch(getCourses({ start: this.page, count: defaultCoursesCount }));
           }
           return EMPTY;
         })).subscribe();
   }
 
-  public onItemsSort(sortingValue: string): void {
-    this.courses = this.coursesService.getList(null, null, sortingValue);
-  }
-
-  public onItemsSearch(filteringValue: string): void{
-    this.courses = this.coursesService.getList(null, null , null, filteringValue);
+  public onItemsSort(sort: string): void {
+    this.store.dispatch(getCourses({ sort }));
   }
 
   public loadMore(): void {
     this.page += 1;
-    this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
+    this.store.dispatch(getCourses({ start: this.page, count: defaultCoursesCount }));
   }
 
   public ngOnInit(): void {
     this.page = 0;
-    this.courses = this.coursesService.getList(this.page, defaultCoursesCount);
+    this.store.dispatch(getCourses({ start: this.page, count: defaultCoursesCount }));
+    this.searchSubscription = this.coursesService.searchQuery.pipe(
+      debounceTime(2000),
+      tap(textFragment => {
+        if (textFragment.length > 2) {
+          this.store.dispatch(getCourses({ textFragment }));
+        }
+      })
+    ).subscribe();
+  }
+
+  public ngOnDestroy(): void {
+    this.searchSubscription.unsubscribe();
   }
 }

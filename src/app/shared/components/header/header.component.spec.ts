@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement, ElementRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -21,15 +22,12 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     router = jasmine.createSpyObj<Router>('router', ['navigate']);
-
-    authService = jasmine.createSpyObj<AuthService>('authService', [
-      'logout', 'isAuthenticated', 'getUserInfo'
-    ]);
     await TestBed.configureTestingModule({
       declarations: [ HeaderComponent, LogoComponent ],
+      imports: [HttpClientTestingModule],
       providers: [
+        AuthService,
         { provide: Router, useValue: router},
-        { provide: AuthService, useValue: authService },
         { provide: ActivatedRoute, useValue: activatedRoute }
       ]
     })
@@ -41,6 +39,7 @@ describe('HeaderComponent', () => {
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
     fixture.detectChanges();
+    authService = TestBed.inject(AuthService);
   });
 
   it('should create', () => {
@@ -48,8 +47,9 @@ describe('HeaderComponent', () => {
   });
 
   it('should logout when logout button is pressed', () => {
-    component.isAuthenticated = true;
+    authService.isAuthenticated.next(true);
     fixture.detectChanges();
+    spyOn(authService, 'logout');
     const buttonRef: ElementRef = debugElement.query(By.css('.logout'));
     const button: HTMLButtonElement = buttonRef.nativeElement as HTMLButtonElement;
     button.click();

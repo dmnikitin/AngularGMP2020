@@ -7,11 +7,12 @@ import { AuthService } from './auth.service';
 import { of } from 'rxjs/internal/observable/of';
 import { User } from 'src/app/shared/models/user';
 import { authUrl } from 'src/assets/variables';
+import { throwError } from 'rxjs';
 
 const mockUser: User = {
   id: 1,
   name: {firstName: 'john', lastName: 'doe'},
-  token: 'fakeToken',
+  fakeToken: 'fakeToken',
   login: 'admin',
   password: 'asdmin'
 };
@@ -52,32 +53,28 @@ describe('AuthService', () => {
   });
 
   it('should return user when getUserInfo method is called', () => {
-    // localStorage.setItem('accessToken', 'fakeToken');
     spyOn(httpClient, 'post').and.returnValue(of(mockUser));
-    service.isAuthenticated();
     service.getUserInfo().subscribe(user => {
-      expect(user.token).toEqual(mockUser.token);
+      expect(user.fakeToken).toEqual(mockUser.fakeToken);
     });
+  });
+
+  it('should throw an error if there was an error in server response', () => {
+    spyOn(httpClient, 'post').and.returnValue(throwError('error'));
+    service.getUserInfo().subscribe();
+    service.login('login', 'password').subscribe();
+
+    expect(httpClient.post).toHaveBeenCalledTimes(2);
   });
 
   it('should login user if credentials provided', () => {
     spyOn(httpClient, 'post').and.returnValue(of({token: 'fakeToken'}));
     service.login('JohnDoe', 'password').subscribe(token => {
-      const isAuthenticated: boolean = service.isAuthenticated();
-      const newToken: string = service.getToken();
+      const newToken: string = service.token;
 
       expect(token.token).toEqual('fakeToken');
       expect(newToken).toEqual('fakeToken');
-      expect(isAuthenticated).toBeTruthy();
       expect(router.navigate).toHaveBeenCalledWith(['/courses']);
     });
-  });
-
-  it('should return authenticationStatus: false if user logs out ', () => {
-    service.logout();
-    const isAuthenticated: boolean = service.isAuthenticated();
-
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
-    expect(isAuthenticated).toBeFalsy();
   });
 });
