@@ -46,3 +46,12 @@ button {
     color: var(--color-dark);
   }
 }
+
+input.ng-invalid.ng-touched {
+  border: 1px solid var(--color-red);
+}
+
+.add-course.mat-button-disabled {
+  background-color: var(--color-red);
+  color: var(--color-white);
+}

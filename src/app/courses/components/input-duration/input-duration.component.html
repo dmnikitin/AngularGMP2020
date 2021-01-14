@@ -1,5 +1,12 @@
-<mat-form-field class="example-form-field">
-  <mat-label>Duration</mat-label>
-  <input matInput type="text" class="input" [ngModel]="duration" (ngModelChange)="onDurationChange($event)" required>
-</mat-form-field>
-<div class="duration-modified"> {{duration | duration}} </div>
+<div class="length-container" [formGroup]="parent">
+  <label for="length" class="length-label">
+    Duration:
+    <span class="length-error" *ngIf="parent.controls.length.invalid">
+      Please provide <strong>numeric value</strong>
+    </span>
+  </label>
+  <div class="length-input" >
+    <input id="length" type="text" formControlName="length" placeholder="Time in minutes">
+    <div class="length-modified" *ngIf="!parent.controls.length.invalid"> {{parent.controls.length.value | duration}} </div>
+  </div>
+</div>

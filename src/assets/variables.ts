@@ -9,5 +9,6 @@ export const requiredDays: number = 14;
 
 export const coursesUrl: string = 'http://localhost:3004/courses';
 export const authUrl: string = 'http://localhost:3004/auth';
+export const authorsUrl: string = 'http://localhost:3004/authors';
 
 export const defaultCoursesCount: number = 9;

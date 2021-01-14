@@ -1,4 +1,22 @@
-<mat-form-field class="example-form-field">
-  <mat-label>Authors</mat-label>
-  <input matInput type="text" class="input" [ngModel]="authors" (ngModelChange)="onAuthorsChange($event)" required>
-</mat-form-field>
+<div [formGroup]="parent">
+  <div class="authors-container"  >
+    <label for="authors" class="authors-label">
+      Authors:
+      <span class="authors-error" *ngIf="parent.controls.authors.invalid">
+        Please select an author from the dropdown
+      </span>
+    </label>
+    <input matInput type="text" class="input" formArrayName="authors" placeholder="Choose an author" (keydown)="onInput($event.target.value)">
+  </div>
+  <div class="dropdown">
+    <ul class="dropdown-list" *ngIf="displayedAuthors?.length && (isDropdownOpen | async)">
+      <li class="authors-item" *ngFor="let author of displayedAuthors"
+          (click)='onSelectAuthor(author)'>
+          {{ author.name }}
+      </li>
+    </ul>
+  </div>
+  <div class="authors-checked">
+    <app-author *ngFor="let author of checkedAuthors" (deleteAuthorEvent)="onDelete($event)" [author]="author"></app-author>
+  </div>
+</div>

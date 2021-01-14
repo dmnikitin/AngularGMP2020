@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CoursesService } from 'src/app/core/services/courses.service';
 
 @Component({
@@ -12,8 +13,9 @@ export class CourseControlsComponent implements OnInit {
 
   public sortingValue: string;
   public route: string = '/courses/new';
+  public form: FormGroup;
 
-  constructor(private coursesService: CoursesService) { }
+  constructor(private coursesService: CoursesService, private fb: FormBuilder) { }
 
   public updateQuery(value: string): void {
     this.coursesService.searchQuery.next(value);
@@ -26,5 +28,6 @@ export class CourseControlsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.sortingValue = 'date';
+    this.form = this.fb.group({ search: new FormControl('') });
   }
 }
